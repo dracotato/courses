@@ -1,0 +1,48 @@
+* { 
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 80%;
+  max-width: 800px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 48px 0;
+}
+
+.editor input {
+  border: none;
+  font-family: serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.editor textarea {
+  flex-grow: 1;
+  border: none;
+  font-family: serif;
+  font-size: 16px;
+}
+
+.editor textarea:focus {
+  border: none;
+  outline: none;
+}
+
+.editor .shortcuts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.editor .shortcuts li {
+  display: inline;
+}
