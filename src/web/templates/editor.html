@@ -8,16 +8,17 @@
   </head>
   <body>
     <form class="editor" method="post">
-      <input name="title" placeholder="Enter title...">
-      {# TODO: disable resizing #}
-      <textarea name="content" placeholder="Start typing..."></textarea>
+      <input class="title" name="title" required placeholder="Enter title...">
+      <textarea class="content" name="content" required placeholder="Start typing..."></textarea>
       <ul class="shortcuts">
-        <li>Bold</li>
-        <li>Italic</li>
-        <li>Link</li>
-        <li>List</li>
+        <li><button type="button" data-content="**bold**"><b>Bold</b></button></li>
+        <li><button type="button" data-content="*italic*"><i>Italic</i></button></li>
+        <li><button type="button" data-content="[title](https://link.com)">Link</button></li>
+        {# TODO: fix "\n" being treated as a literal #}
+        <li><button type="button" data-content="1. first\n2. second\n3. ...">List</button></li>
       </ul>
       <button type="submit">submit</button>
     </form>
+  <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
   </body>
 </html>
