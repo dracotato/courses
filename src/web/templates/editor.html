@@ -11,11 +11,10 @@
     <input class="title" name="title" required placeholder="Enter title...">
     <textarea class="content" name="content" required placeholder="Start typing..."></textarea>
     <ul class="shortcuts">
-      <li><button type="button" data-content="**bold**"><b>Bold</b></button></li>
-      <li><button type="button" data-content="*italic*"><i>Italic</i></button></li>
-      <li><button type="button" data-content="[title](link)">Link</button></li>
-      {# TODO: fix "\n" being treated as a literal #}
-      <li><button type="button" data-content="1. first\n2. second\n3. ...">List</button></li>
+      <li><button type="button" data-content="**<<bold>>**"><b>Bold</b></button></li>
+      <li><button type="button" data-content="*<<italic>>*"><i>Italic</i></button></li>
+      <li><button type="button" data-content="[<<title>>](<<link>>)">Link</button></li>
+      <li><button type="button" data-content="1. <<first>>\n2. <<second>>\n3. <<...>>">List</button></li>
     </ul>
     <button type="submit">submit</button>
   </form>
