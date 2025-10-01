@@ -1,7 +1,9 @@
-from flask import Flask, g, current_app as ca
-from os import path
 import sqlite3
+from os import path
+
 import click
+from flask import Flask, g
+from flask import current_app as ca
 
 
 def get_db():

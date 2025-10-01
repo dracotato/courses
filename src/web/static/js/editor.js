@@ -6,11 +6,10 @@ let fieldIterator;
 let lengthBeforeField;
 let diff;
 
-
 // handle shortcut buttons' click event
 for (let i = 0; i < shortcutList.children.length; i++) {
   const shortcut = shortcutList.children[i].querySelector("button");
-  shortcut.addEventListener("click", _ => {
+  shortcut.addEventListener("click", (_) => {
     // reset
     if (fieldsStartIndex + 1 > content.value.length) {
       fieldsStartIndex = content.value.length - 1;
@@ -26,13 +25,13 @@ for (let i = 0; i < shortcutList.children.length; i++) {
     // set inital selection
     let result = fieldIterator.next();
     setSelection(result.field.start, result.field.end);
-  })
+  });
 }
 
 // use tab to go to the next field
-content.addEventListener("keydown", event => {
+content.addEventListener("keydown", (event) => {
   if (event.key !== "Tab") {
-    return
+    return;
   }
 
   event.preventDefault();
@@ -46,10 +45,10 @@ content.addEventListener("keydown", event => {
       content.setSelectionRange(content.value.length, content.value.length);
     }
   }
-})
+});
 
 function appendFormatted(string, text) {
-  let formatted = string.replaceAll("\\n", "\n")
+  let formatted = string.replaceAll("\\n", "\n");
 
   // multiline shortcuts
   if (formatted.includes("\n")) {
@@ -75,7 +74,7 @@ function extractFields(string) {
   let subString = string.substring(fieldsStartIndex + 1);
 
   if (subString === "") {
-    return null
+    return null;
   }
 
   let fields = subString.match(fieldRegex);
@@ -88,7 +87,7 @@ function extractFields(string) {
     let startIndex = subString.indexOf(field) + fieldsStartIndex + 1;
     let endIndex = startIndex + field.length;
 
-    fieldData.push({ start: startIndex, end: endIndex })
+    fieldData.push({ start: startIndex, end: endIndex });
   }
 
   fieldsStartIndex = content.value.length - 1;
@@ -98,15 +97,15 @@ function extractFields(string) {
     next() {
       let result;
       if (iteratorIndex < fieldData.length) {
-        result = { field: fieldData[iteratorIndex], done: false }
+        result = { field: fieldData[iteratorIndex], done: false };
         iteratorIndex++;
         return result;
       }
       return { done: true };
-    }
-  }
+    },
+  };
 
-  return fieldIterator
+  return fieldIterator;
 }
 
 function setSelection(start, end) {

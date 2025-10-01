@@ -1,7 +1,7 @@
 from flask import Flask
 
+from .db import close_db, register_commands
 from .views import register_blueprints
-from .db import register_commands, close_db
 
 
 def create_app():

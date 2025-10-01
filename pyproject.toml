@@ -10,3 +10,6 @@ dependencies = [
     "markdown>=3.9",
     "python-dotenv>=1.1.1",
 ]
+
+[tool.djlint]
+indent = 2

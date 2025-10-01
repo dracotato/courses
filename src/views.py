@@ -1,17 +1,18 @@
+from bleach import clean
 from flask import (
     Blueprint,
-    current_app as ca,
     abort,
     redirect,
     render_template,
     request,
     url_for,
 )
+from flask import (
+    current_app as ca,
+)
 from markdown import markdown
-from bleach import clean
 
 from .db import get_db, query_db
-
 
 lesson_bp = Blueprint("lessons", __name__, url_prefix="/lessons")
 
