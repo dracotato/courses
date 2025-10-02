@@ -1,53 +1,62 @@
 const content = document.querySelector("textarea.content");
 const shortcutList = document.querySelector("ul.shortcuts");
 
-let fieldsStartIndex = -1;
-let fieldIterator;
-let lengthBeforeField;
-let diff;
+// a function
+let selectNextField;
+let keybinds = [];
 
-// handle shortcut buttons' click event
 for (let i = 0; i < shortcutList.children.length; i++) {
   const shortcut = shortcutList.children[i].querySelector("button");
-  shortcut.addEventListener("click", (_) => {
-    // reset
-    if (fieldsStartIndex + 1 > content.value.length) {
-      fieldsStartIndex = content.value.length - 1;
-    }
+  const dataset = shortcut.dataset;
 
-    content.value = appendFormatted(shortcut.dataset.content, content.value);
-    content.focus();
-    // resets
-    lengthBeforeField = content.value.length;
-    diff = 0;
+  // handle shortcut buttons' click event
+  shortcut.addEventListener("click", (_) => insertShortcut(dataset.content));
 
-    fieldIterator = extractFields(content.value);
-    // set inital selection
-    let result = fieldIterator.next();
-    setSelection(result.field.start, result.field.end);
+  // load keybinds
+  const keyparts = dataset.keybind.toLowerCase().split("+");
+  keybinds.push({
+    shortcutData: dataset.content,
+    ctrl: keyparts.includes("ctrl"),
+    shift: keyparts.includes("shift"),
+    alt: keyparts.includes("alt"),
+    key: keyparts[keyparts.length - 1],
   });
 }
 
-// use tab to go to the next field
-content.addEventListener("keydown", (event) => {
-  if (event.key !== "Tab") {
-    return;
-  }
+// handle keybind
+content.addEventListener("keydown", (e) => {
+  if (e.key === "Tab") {
+    e.preventDefault();
+    if (selectNextField !== undefined) {
+      selectNextField();
+    }
+  } else {
+    const match = keybinds.find((entry) => {
+      return (
+        e.key === entry.key &&
+        e.ctrlKey === entry.ctrl &&
+        e.shiftKey === entry.shift &&
+        e.altKey === entry.alt
+      );
+    });
 
-  event.preventDefault();
-
-  if (fieldIterator !== undefined) {
-    result = fieldIterator.next();
-    if (!result.done) {
-      setSelection(result.field.start, result.field.end);
-    } else {
-      // set the caret at at the end
-      content.setSelectionRange(content.value.length, content.value.length);
+    if (match) {
+      e.preventDefault();
+      insertShortcut(match.shortcutData);
     }
   }
 });
 
-function appendFormatted(string, text) {
+function insertShortcut(shortcut) {
+  content.value = formatShortcut(shortcut, content.value);
+  content.focus();
+  // initialization
+  selectNextField = selector();
+  // set inital selection
+  selectNextField();
+}
+
+function formatShortcut(string, text) {
   let formatted = string.replaceAll("\\n", "\n");
 
   // multiline shortcuts
@@ -60,7 +69,7 @@ function appendFormatted(string, text) {
 
   // inline shortcuts
   else {
-    if (content.value[content.value.length] !== " ") {
+    if (content.value[content.value.length - 1] !== " ") {
       formatted = " " + formatted;
     }
   }
@@ -71,26 +80,22 @@ function appendFormatted(string, text) {
 function extractFields(string) {
   const fieldRegex = /<<[A-z.]+>>/g;
 
-  let subString = string.substring(fieldsStartIndex + 1);
-
-  if (subString === "") {
-    return null;
+  if (!string) {
+    return {
+      // always return done
+      next: () => ({ done: true }),
+    };
   }
 
-  let fields = subString.match(fieldRegex);
+  let matches = string.matchAll(fieldRegex);
+  let fieldData = [
+    ...matches.map((match) => ({
+      start: match.index,
+      end: match.index + match[0].length,
+    })),
+  ];
 
-  let fieldData = [];
-
-  for (let i = 0; i < fields.length; i++) {
-    const field = fields[i];
-
-    let startIndex = subString.indexOf(field) + fieldsStartIndex + 1;
-    let endIndex = startIndex + field.length;
-
-    fieldData.push({ start: startIndex, end: endIndex });
-  }
-
-  fieldsStartIndex = content.value.length - 1;
+  lengthPreShortcut = content.value.length - 1;
 
   let iteratorIndex = 0;
   const fieldIterator = {
@@ -108,9 +113,23 @@ function extractFields(string) {
   return fieldIterator;
 }
 
-function setSelection(start, end) {
-  diff += lengthBeforeField ? content.value.length - lengthBeforeField : 0;
+function selector() {
+  const fieldIterator = extractFields(content.value);
+  let lengthBeforeField = content.value.length;
 
-  content.setSelectionRange(start + diff, end + diff);
-  lengthBeforeField = content.value.length;
+  function next() {
+    const result = fieldIterator.next();
+
+    if (!result.done) {
+      const diff = content.value.length - lengthBeforeField || 0;
+      content.setSelectionRange(
+        result.field.start + diff,
+        result.field.end + diff,
+      );
+    } else {
+      content.setSelectionRange(content.value.length, content.value.length);
+    }
+  }
+
+  return next;
 }

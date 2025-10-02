@@ -12,20 +12,24 @@
     <textarea class="content" name="content" required placeholder="Start typing..."></textarea>
     <ul class="shortcuts">
       <li>
-        <button type="button" data-content="**<<bold>>**">
+        <button type="button" data-content="**<<bold>>**" data-keybind="ctrl+alt+b">
           <b>Bold</b>
         </button>
       </li>
       <li>
-        <button type="button" data-content="*<<italic>>*">
+        <button type="button" data-content="*<<italic>>*" data-keybind="ctrl+alt+i">
           <i>Italic</i>
         </button>
       </li>
       <li>
-        <button type="button" data-content="[<<title>>](<<link>>)">Link</button>
+        <button type="button"
+                data-content="[<<title>>](<<link>>)"
+                data-keybind="ctrl+alt+a">Link</button>
       </li>
       <li>
-        <button type="button" data-content="1. <<first>>\n2. <<second>>\n3. <<...>>">List</button>
+        <button type="button"
+                data-content="1. <<first>>\n2. <<second>>\n3. <<...>>"
+                data-keybind="ctrl+alt+l">List</button>
       </li>
     </ul>
     <button type="submit">submit</button>
