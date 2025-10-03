@@ -95,8 +95,6 @@ function extractFields(string) {
     })),
   ];
 
-  lengthPreShortcut = content.value.length - 1;
-
   let iteratorIndex = 0;
   const fieldIterator = {
     next() {
@@ -115,6 +113,8 @@ function extractFields(string) {
 
 function selector() {
   const fieldIterator = extractFields(content.value);
+  // used to know the new position of the fields
+  // after the user edits
   let lengthBeforeField = content.value.length;
 
   function next() {
@@ -127,6 +127,7 @@ function selector() {
         result.field.end + diff,
       );
     } else {
+      // set the caret at the last character
       content.setSelectionRange(content.value.length, content.value.length);
     }
   }
