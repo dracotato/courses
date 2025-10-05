@@ -1,0 +1,124 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--clr-gray-100);
+  font-family: "Inter";
+  font-size: 16px;
+  color: var(--clr-gray-900);
+}
+
+button,
+.btn {
+  background-color: var(--clr-gray-50);
+  padding: 8px 12px;
+  border: 2px solid var(--clr-gray-900);
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: var(--clr-primary-50);
+}
+
+.topbar {
+  display: flex;
+  background-color: var(--clr-gray-50);
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--clr-gray-300);
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.icon-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.menu-icon,
+.close-icon {
+  transition: 150ms background-color ease-out;
+  padding: 8px;
+}
+
+.menu-icon:hover,
+.close-icon:hover,
+.sidebar .links a:hover {
+  background-color: color-mix(in srgb, var(--clr-gray-300) 30%, transparent);
+}
+
+.topbar h3 {
+  height: fit-content;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background-color: var(--clr-gray-50);
+  height: 100vh;
+  width: fit-content;
+  padding: 32px;
+  border-right: 1px solid var(--clr-gray-300);
+  position: absolute;
+  top: 0;
+  left: -100%;
+  overflow: hidden;
+  transition: 130ms left cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.sidebar .close-icon {
+  width: fit-content;
+  align-self: end;
+}
+
+.sidebar .links {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 12px;
+}
+
+.sidebar .links hr {
+  color: var(--clr-gray-100);
+  height: 1px;
+}
+
+.sidebar .links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  padding: 2px 4px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 200ms background-color ease-out;
+  user-select: none;
+  cursor: pointer;
+}
+
+.sidebar .links .wip {
+  cursor: not-allowed;
+}
+
+.sidebar .links .wip::after {
+  content: "⚠️";
+}

@@ -1,6 +1,7 @@
 from bleach import clean
 from flask import (
     Blueprint,
+    Flask,
     abort,
     redirect,
     render_template,
@@ -14,11 +15,18 @@ from markdown import markdown
 
 from .db import get_db, query_db
 
-lesson_bp = Blueprint("lessons", __name__, url_prefix="/lessons")
+root_bp: Blueprint = Blueprint("root", __name__)
+lesson_bp: Blueprint = Blueprint("lessons", __name__, url_prefix="/lessons")
 
 
-def register_blueprints(app):
-    app.register_blueprint(lesson_bp)
+def register_blueprints(app: Flask):
+    for bp in [root_bp, lesson_bp]:
+        app.register_blueprint(bp)
+
+
+@root_bp.route("/")
+def index():
+    return "Welcome Home!"
 
 
 @lesson_bp.route("/", methods=["GET", "POST"])
@@ -33,7 +41,7 @@ def create():
 
         return redirect(url_for("lessons.view", id=cur.lastrowid))
     else:
-        return render_template("editor.html")
+        return render_template("editor.html", title="New Lesson")
 
 
 @lesson_bp.route("/<int:id>")
@@ -50,4 +58,6 @@ def view(id: int):
         attributes=ca.config["RENDER_ATTRS"],
     )
 
-    return render_template("render.html", title=title, content=content)
+    return render_template(
+        "render.html", title="View Lesson", lesson_title=title, content=content
+    )
