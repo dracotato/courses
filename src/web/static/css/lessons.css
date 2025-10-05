@@ -1,24 +1,37 @@
-* {
-  box-sizing: border-box;
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-body {
-  padding: 0;
-  margin: 0;
+.container {
+  width: 80%;
+  max-width: 800px;
+  flex-grow: 1;
+  margin: 0 auto;
+}
+
+.container .lesson-title {
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--clr-gray-drk);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .editor {
   display: flex;
   flex-direction: column;
+  height: 100%;
   gap: 24px;
-  width: 80%;
-  max-width: 800px;
-  height: 100vh;
-  margin: 0 auto;
   padding: 48px 0;
 }
 
 .editor input {
+  background-color: inherit;
   border: none;
   font-family: serif;
   font-size: 16px;
@@ -26,6 +39,7 @@ body {
 }
 
 .editor textarea {
+  background-color: inherit;
   flex-grow: 1;
   border: none;
   font-family: serif;
@@ -33,9 +47,15 @@ body {
   resize: none;
 }
 
-.editor textarea:focus {
+.editor textarea:focus,
+.editor input {
   border: none;
   outline: none;
+}
+
+.editor .actions {
+  display: flex;
+  gap: 32px;
 }
 
 .editor .shortcuts {

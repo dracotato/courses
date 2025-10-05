@@ -3,36 +3,37 @@
   Editor
 {% endblock title %}
 {% block head %}
-  <link href="{{ url_for('static', filename='css/editor.css') }}"
+  <link href="{{ url_for("static", filename="css/lessons.css") }}"
         rel="stylesheet">
 {% endblock head %}
 {% block body %}
-  <form class="editor" method="post">
-    <input class="title" name="title" required placeholder="Enter title...">
-    <textarea class="content" name="content" required placeholder="Start typing..."></textarea>
-    <ul class="shortcuts">
-      <li>
-        <button type="button" data-content="**<<bold>>**" data-keybind="ctrl+alt+b">
-          <b>Bold</b>
-        </button>
-      </li>
-      <li>
-        <button type="button" data-content="*<<italic>>*" data-keybind="ctrl+alt+i">
-          <i>Italic</i>
-        </button>
-      </li>
-      <li>
-        <button type="button"
-                data-content="[<<title>>](<<link>>)"
-                data-keybind="ctrl+alt+a">Link</button>
-      </li>
-      <li>
-        <button type="button"
-                data-content="1. <<first>>\n2. <<second>>\n3. <<...>>"
-                data-keybind="ctrl+alt+l">List</button>
-      </li>
-    </ul>
-    <button type="submit">submit</button>
+  <div class="container">
+    <form class="editor" method="post">
+      <input class="title" name="title" required placeholder="Enter title...">
+      <textarea class="content" name="content" placeholder="Start typing..." required></textarea>
+      <div class="actions">
+        <ul class="shortcuts">
+          <li>
+            <button type="button" data-content="**<<bold>>**" data-keybind="ctrl+alt+b">Bold</button>
+          </li>
+          <li>
+            <button type="button" data-content="*<<italic>>*" data-keybind="ctrl+alt+i">Italic</button>
+          </li>
+          <li>
+            <button type="button"
+                    data-content="[<<title>>](<<link>>)"
+                    data-keybind="ctrl+alt+a">Link</button>
+          </li>
+          <li>
+            <button type="button"
+                    data-content="1. <<first>>\n2. <<second>>\n3. <<...>>"
+                    data-keybind="ctrl+alt+l">List</button>
+          </li>
+        </li>
+      </ul>
+      <button type="submit">Save</button>
+    </div>
   </form>
-  <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+</div>
+<script src="{{ url_for("static", filename="js/editor.js") }}"></script>
 {% endblock body %}

@@ -1,0 +1,15 @@
+:root {
+  /* colors */
+  /* the higher the number, the darker the color */
+  /* and vice versa */
+  --clr-primary-50: #a7c9ff;
+  --clr-primary-200: #4d94ff;
+  --clr-primary-500: #194eac;
+  --clr-primary-900: #0d244d;
+  --clr-gray-50: #fafafa;
+  --clr-gray-100: #f5f5f5;
+  --clr-gray-300: #b5b5b5;
+  --clr-gray-500: #757575;
+  --clr-gray-700: #3a3a3a;
+  --clr-gray-900: #111;
+}

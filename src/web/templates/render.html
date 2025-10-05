@@ -1,9 +1,11 @@
 {% extends "base.html" %}
-{% block title %}
-  {{ title }}
-{% endblock title %}
+{% block head %}
+  <link href="{{ url_for("static", filename="css/lessons.css") }}"
+        rel="stylesheet">
+{% endblock head %}
 {% block body %}
-  <p>{{ title }}:</p>
-  <hr>
-  <div class="content">{{ content | safe }}</div>
+  <div class="container">
+    <h1 class="lesson-title">{{ lesson_title }}</h1>
+    <div class="content">{{ content | safe }}</div>
+  </div>
 {% endblock body %}
