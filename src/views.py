@@ -46,7 +46,8 @@ def create():
 
 @lesson_bp.route("/<int:id>")
 def view(id: int):
-    lesson = query_db("SELECT * FROM lesson WHERE id = ?", args=(id,), one=True)
+    cur = get_db().execute("SELECT * FROM lesson WHERE lessonid = ?", (id,))
+    lesson = cur.fetchone()
 
     if not lesson:
         abort(404)

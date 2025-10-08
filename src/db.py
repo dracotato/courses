@@ -6,13 +6,15 @@ from flask import Flask, g
 from flask import current_app as ca
 
 
-def get_db():
+# db
+def get_db() -> sqlite3.Connection:
     if "db" not in g:
         g.db = sqlite3.connect(
             path.join(ca.instance_path, ca.config["DATABASE"]),
-            detect_types=sqlite3.PARSE_DECLTYPES,
+            detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES,
         )
         g.db.row_factory = sqlite3.Row
+        g.db.execute("PRAGMA foreign_keys = ON;")  # enable foreign keys
 
     return g.db
 
@@ -24,19 +26,9 @@ def close_db(_=None):
         db.close()
 
 
-def query_db(query, args=(), one=False):
-    cur = get_db().execute(query, args)
-    res = cur.fetchall()
-    cur.close()
-
-    return (res[0] if res else None) if one else res
-
-
 def init_db():
-    cur = get_db().cursor()
-
     with ca.open_resource("schema.sql", mode="r") as f:
-        cur.executescript(f.read())
+        get_db().executescript(f.read())
 
 
 # Commands
