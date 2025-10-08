@@ -13,3 +13,6 @@ dependencies = [
 
 [tool.djlint]
 indent = 2
+
+[tool.basedpyright]
+typeCheckingMode = "standard"
