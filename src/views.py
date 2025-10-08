@@ -13,7 +13,7 @@ from flask import (
 )
 from markdown import markdown
 
-from .db import get_db, query_db
+from .db import get_db
 
 root_bp: Blueprint = Blueprint("root", __name__)
 lesson_bp: Blueprint = Blueprint("lessons", __name__, url_prefix="/lessons")
@@ -33,9 +33,26 @@ def index():
 def create():
     if request.method == "POST":
         db = get_db()
-        cur = db.execute(
-            "INSERT INTO lesson (title, content) VALUES (?, ?)",
-            (request.form["title"], request.form["content"]),
+
+        # automatically create a test user, and course
+        # TODO: remove this block after user routes are implemented
+        cur = db.execute("SELECT count(*) FROM user;")
+        if cur.fetchone()["count(*)"] == 0:
+            cur.execute(
+                "INSERT INTO user (username,email,password) VALUES (?,?,?)",
+                ("default", "default@courses.com", "pass"),
+            )
+        # TODO: remove this block after course routes are implemented
+        cur.execute("SELECT count(*) FROM course;")
+        if cur.fetchone()["count(*)"] == 0:
+            cur.execute(
+                "INSERT INTO course (title,desc,owner) VALUES (?,?,?)",
+                ("default title", "default desc", 1),
+            )
+
+        cur.execute(
+            "INSERT INTO lesson (title, content, owner, course) VALUES (?,?,?,?)",
+            (request.form["title"], request.form["content"], 1, 1),
         )
         db.commit()
 
@@ -44,7 +61,7 @@ def create():
         return render_template("editor.html", title="New Lesson")
 
 
-@lesson_bp.route("/<int:id>")
+@lesson_bp.route("/v/<int:id>")
 def view(id: int):
     cur = get_db().execute("SELECT * FROM lesson WHERE lessonid = ?", (id,))
     lesson = cur.fetchone()
