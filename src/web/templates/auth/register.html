@@ -1,0 +1,36 @@
+{% extends "base_auth.html" %}
+{% block form %}
+  <div class="input-container">
+    <label for="username">Username</label>
+    <input type="text"
+           name="username"
+           placeholder="e.g. usrx18 (No spaces or special characters)"
+           autocomplete="username"
+           required>
+  </div>
+  <div class="input-container">
+    <label for="email">Email</label>
+    <input type="email"
+           name="email"
+           placeholder="e.g. usrx18@gmail.com"
+           autocomplete="email"
+           required>
+  </div>
+  <div class="input-container">
+    <label for="password">Password</label>
+    <input type="password"
+           name="password"
+           placeholder="Enter your strong password..."
+           autocomplete="new-password"
+           required>
+  </div>
+  <div class="input-container">
+    <label for="confirm-password">Confirm Password</label>
+    <input type="password"
+           name="confirm-password"
+           placeholder="Again..."
+           autocomplete="new-password"
+           required>
+  </div>
+  <button type="submit">Register</button>
+{% endblock form %}

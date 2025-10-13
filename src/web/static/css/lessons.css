@@ -4,13 +4,6 @@ body {
   height: 100vh;
 }
 
-.container {
-  width: 80%;
-  max-width: 800px;
-  flex-grow: 1;
-  margin: 0 auto;
-}
-
 .container .lesson-title {
   margin-bottom: 48px;
   border-bottom: 1px solid var(--clr-gray-drk);

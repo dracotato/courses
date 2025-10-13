@@ -1,0 +1,20 @@
+{% extends "base_auth.html" %}
+{% block form %}
+  <div class="input-container">
+    <label for="id">Email or Username</label>
+    <input type="text"
+           name="id"
+           placeholder="usrx18@gmail.com or usrx18"
+           autocomplete="email"
+           required>
+  </div>
+  <div class="input-container">
+    <label for="password">Password</label>
+    <input type="password"
+           name="password"
+           placeholder="your password..."
+           autocomplete="current-password"
+           required>
+  </div>
+  <button type="submit">Log In</button>
+{% endblock form %}
