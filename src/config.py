@@ -1,3 +1,7 @@
+from os import getenv
+from secrets import token_hex
+
+
 class Config:
     """Base config"""
 
@@ -22,3 +26,4 @@ class Config:
         "img",
     ]
     RENDER_ATTRS = {"*": ["class"], "a": ["href"], "img": ["alt", "src"]}
+    SECRET_KEY = getenv("SECRET_KEY", token_hex(16))
