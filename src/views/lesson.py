@@ -13,8 +13,14 @@ from flask import (
 from markdown import markdown
 
 from src.db import get_db
+from src.utils import join_web
 
-lesson_bp: Blueprint = Blueprint("lesson", __name__, url_prefix="/lesson")
+lesson_bp: Blueprint = Blueprint(
+    "lesson",
+    __name__,
+    url_prefix="/lesson",
+    template_folder=join_web("templates/lesson"),
+)
 
 
 @lesson_bp.route("/", methods=["GET", "POST"])
