@@ -21,7 +21,7 @@ form {
   gap: 24px;
 }
 
-form button[type="submit"] {
+.auth-form button[type="submit"] {
   margin-top: 48px;
   align-self: end;
 }
