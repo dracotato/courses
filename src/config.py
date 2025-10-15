@@ -1,6 +1,10 @@
 from os import getenv
 from secrets import token_hex
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class Config:
     """Base config"""
