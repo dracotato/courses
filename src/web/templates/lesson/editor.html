@@ -6,24 +6,27 @@
 {% block body %}
   <div class="container">
     <form class="editor" method="post">
-      <input class="title" name="title" required placeholder="Enter title...">
-      <textarea class="content" name="content" placeholder="Start typing..." required></textarea>
-      <div class="actions">
-        <ul class="shortcuts">
+      <input name="title" required placeholder="Enter title...">
+      <textarea class="editor-area"
+                name="content"
+                placeholder="Start typing..."
+                required></textarea>
+      <div class="actions-container">
+        <ul class="actions">
           <li>
-            <button type="button" data-content="**<<bold>>**" data-keybind="ctrl+alt+b">Bold</button>
+            <button type="button" data-template="**<<bold>>**" data-keybind="ctrl+alt+b">Bold</button>
           </li>
           <li>
-            <button type="button" data-content="*<<italic>>*" data-keybind="ctrl+alt+i">Italic</button>
+            <button type="button" data-template="*<<italic>>*" data-keybind="ctrl+alt+i">Italic</button>
           </li>
           <li>
             <button type="button"
-                    data-content="[<<title>>](<<link>>)"
+                    data-template="[<<title>>](<<link>>)"
                     data-keybind="ctrl+alt+a">Link</button>
           </li>
           <li>
             <button type="button"
-                    data-content="1. <<first>>\n2. <<second>>\n3. <<...>>"
+                    data-template="1. <<first>>\n2. <<second>>\n3. <<...>>"
                     data-keybind="ctrl+alt+l">List</button>
           </li>
         </li>

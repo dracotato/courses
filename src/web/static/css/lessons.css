@@ -4,12 +4,12 @@ body {
   height: 100vh;
 }
 
-.container .lesson-title {
+.lesson-title {
   margin-bottom: 48px;
   border-bottom: 1px solid var(--clr-gray-drk);
 }
 
-.content {
+.lesson-content {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -31,7 +31,7 @@ body {
   font-weight: bold;
 }
 
-.editor textarea {
+.editor .editor-area {
   background-color: inherit;
   flex-grow: 1;
   border: none;
@@ -40,18 +40,18 @@ body {
   resize: none;
 }
 
-.editor textarea:focus,
+.editor .editor-area:focus,
 .editor input {
   border: none;
   outline: none;
 }
 
-.editor .actions {
+.editor .actions-container {
   display: flex;
   gap: 32px;
 }
 
-.editor .shortcuts {
+.editor .actions {
   display: flex;
   gap: 8px;
   width: 100%;
@@ -61,6 +61,6 @@ body {
   padding: 0;
 }
 
-.editor .shortcuts li {
+.editor .actions li {
   display: inline;
 }
