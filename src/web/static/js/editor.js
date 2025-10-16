@@ -1,8 +1,7 @@
 const content = document.querySelector("textarea.content");
 const shortcutList = document.querySelector("ul.shortcuts");
 
-// a function
-let selectNextField;
+let selectNextField; // a function
 let keybinds = [];
 
 for (let i = 0; i < shortcutList.children.length; i++) {
@@ -10,12 +9,15 @@ for (let i = 0; i < shortcutList.children.length; i++) {
   const dataset = shortcut.dataset;
 
   // handle shortcut buttons' click event
-  shortcut.addEventListener("click", (_) => insertShortcut(dataset.content));
+  shortcut.addEventListener("click", (_) => {
+    insertShortcut(dataset.content.replaceAll("\\n", "\n"));
+    initFieldSelection();
+  });
 
   // load keybinds
   const keyparts = dataset.keybind.toLowerCase().split("+");
   keybinds.push({
-    shortcutData: dataset.content,
+    shortcutData: dataset.content.replaceAll("\\n", "\n"),
     ctrl: keyparts.includes("ctrl"),
     shift: keyparts.includes("shift"),
     alt: keyparts.includes("alt"),
@@ -42,22 +44,46 @@ content.addEventListener("keydown", (e) => {
 
     if (match) {
       e.preventDefault();
-      insertShortcut(match.shortcutData);
+      if (isSelection()) {
+        let fields = getFields(match.shortcutData);
+        let styled =
+          match.shortcutData.slice(0, fields[0].start) +
+          getSelectionStr() +
+          match.shortcutData.slice(fields[0].end);
+        content.setRangeText(styled);
+        initFieldSelection();
+      } else {
+        insertShortcut(match.shortcutData);
+        initFieldSelection();
+      }
     }
   }
 });
 
-function insertShortcut(shortcut) {
-  content.value = formatShortcut(shortcut, content.value);
+function initFieldSelection() {
   content.focus();
   // initialization
   selectNextField = selector();
-  // set inital selection
-  selectNextField();
+  // set inital selection if there's no selection
+  if (!isSelection()) {
+    selectNextField();
+  }
+}
+
+function insertShortcut(shortcut) {
+  content.value = formatShortcut(shortcut, content.value);
+}
+
+function isSelection() {
+  return content.selectionStart !== content.selectionEnd;
+}
+
+function getSelectionStr() {
+  return content.value.slice(content.selectionStart, content.selectionEnd);
 }
 
 function formatShortcut(string, text) {
-  let formatted = string.replaceAll("\\n", "\n");
+  let formatted = string;
 
   // multiline shortcuts
   if (formatted.includes("\n")) {
@@ -77,16 +103,8 @@ function formatShortcut(string, text) {
   return text + formatted;
 }
 
-function extractFields(string) {
+function getFields(string) {
   const fieldRegex = /<<[A-z.]+>>/g;
-
-  if (!string) {
-    return {
-      // always return done
-      next: () => ({ done: true }),
-    };
-  }
-
   let matches = string.matchAll(fieldRegex);
   let fieldData = [
     ...matches.map((match) => ({
@@ -95,30 +113,43 @@ function extractFields(string) {
     })),
   ];
 
-  let iteratorIndex = 0;
-  const fieldIterator = {
+  return fieldData;
+}
+
+function fieldIterator(string) {
+  if (!string) {
+    return {
+      // always return done
+      next: () => ({ done: true }),
+    };
+  }
+
+  fieldData = getFields(string);
+
+  let index = 0;
+  const iterator = {
     next() {
       let result;
-      if (iteratorIndex < fieldData.length) {
-        result = { field: fieldData[iteratorIndex], done: false };
-        iteratorIndex++;
+      if (index < fieldData.length) {
+        result = { field: fieldData[index], done: false };
+        index++;
         return result;
       }
       return { done: true };
     },
   };
 
-  return fieldIterator;
+  return iterator;
 }
 
 function selector() {
-  const fieldIterator = extractFields(content.value);
+  const fields = fieldIterator(content.value);
   // used to know the new position of the fields
   // after the user edits
   let lengthBeforeField = content.value.length;
 
   function next() {
-    const result = fieldIterator.next();
+    const result = fields.next();
 
     if (!result.done) {
       const diff = content.value.length - lengthBeforeField || 0;
