@@ -87,11 +87,9 @@ def login():
         formdata = request.form
 
         result = db.execute(
-            # TODO: look more into sqlite3 bindings
-            "SELECT * FROM user WHERE username = ? OR email = ?",
-            (formdata["cred"], formdata["cred"]),
+            "SELECT * FROM user WHERE username = :cred OR email = :cred",
+            {"cred": formdata["cred"]},
         ).fetchone()
-        print(dict(result))
 
         if check_password_hash(result["password"], formdata["password"]):
             session["user_id"] = result["userid"]
