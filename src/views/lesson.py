@@ -55,7 +55,7 @@ def create():
         return render_template("editor.html", title="New Lesson")
 
 
-@lesson_bp.route("/v/<int:id>")
+@lesson_bp.route("/v/<int:id>/")
 def view(id: int):
     cur = get_db().execute("SELECT * FROM lesson WHERE lessonid = ?", (id,))
     lesson = cur.fetchone()
