@@ -1,12 +1,19 @@
 const editorArea = document.querySelector("textarea.editor-area");
 const actionsContainer = document.querySelector("ul.actions");
 
+const keybindHelpIcon = document.querySelector(".keybinds-help");
+const keybindHelpDialog = document.querySelector(".keybinds-dialog");
+
 const fieldPattern = "<<[A-z.]+>>";
 const fieldRegex = new RegExp(fieldPattern);
 const fieldRegexGlobal = new RegExp(fieldPattern, "g");
 
 let selectNextField; // a function
 let keybinds = [];
+
+keybindHelpIcon.addEventListener("click", (_) => {
+  keybindHelpDialog.showModal();
+});
 
 for (let i = 0; i < actionsContainer.children.length; i++) {
   const actionBtn = actionsContainer.children[i].querySelector("button");
@@ -21,6 +28,33 @@ for (let i = 0; i < actionsContainer.children.length; i++) {
 
   // load keybinds
   const keyparts = dataset.keybind.toLowerCase().split("+");
+
+  // populate the keybind help dialog
+  const keybindsContainer = keybindHelpDialog.querySelector(
+    ".keybinds-container",
+  );
+
+  // create a new keybind div to be added to the DOM
+  let newKeybind = document.createElement("div");
+  newKeybind.classList.add("keybind");
+
+  let newKeybindTitle = document.createElement("div");
+  newKeybindTitle.innerText = actionBtn.innerText;
+  newKeybindTitle.classList.add("keybind-title");
+  newKeybind.appendChild(newKeybindTitle); // append under newKeybind
+
+  let newKeybindKeys = document.createElement("div");
+  keyparts.forEach((part) => {
+    let kbdElement = document.createElement("kbd");
+    kbdElement.innerText = part;
+    newKeybindKeys.appendChild(kbdElement);
+  });
+  newKeybindKeys.classList.add("keys");
+  newKeybind.appendChild(newKeybindKeys); // append under newKeybind
+
+  // finally append the newKeybind itself
+  keybindsContainer.appendChild(newKeybind);
+
   keybinds.push({
     formatTemplate: dataset.template,
     ctrl: keyparts.includes("ctrl"),
@@ -37,6 +71,9 @@ editorArea.addEventListener("keydown", (e) => {
     if (selectNextField !== undefined) {
       selectNextField();
     }
+  } else if (e.key === "/" && e.ctrlKey) {
+    e.preventDefault();
+    keybindHelpDialog.showModal();
   } else {
     const match = keybinds.find((entry) => {
       return (
