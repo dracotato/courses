@@ -52,6 +52,17 @@ button[type="submit"] {
   background-color: var(--clr-primary-50);
 }
 
+kbd {
+  min-width: 40px; /* ensure all 1 chars are the same width */
+  margin-bottom: 4px;
+  padding: 6px 12px;
+  border: 2px solid var(--clr-gray-900);
+  border-bottom-width: 4px;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .container {
   width: 80%;
   max-width: 800px;

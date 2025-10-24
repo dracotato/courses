@@ -5,8 +5,24 @@
 {% endblock head %}
 {% block body %}
   <div class="container">
+    <dialog class="keybinds-dialog" closedby="any">
+      <div class="keybinds-container">
+        {# how js loads the keybinds #}
+        {# <div class="keybind">
+          <div class="keybind-title">Bold</div>
+          <div class="keys">
+            <kbd>ctrl</kbd>
+            <kbd>shift</kbd>
+            <kbd>b</kbd>
+          </div>
+        </div> #}
+      </div>
+    </dialog>
     <form class="editor" method="post">
-      <input name="title" required placeholder="Enter title...">
+      <div class="title-container">
+        <input name="title" required placeholder="Enter title...">
+        <span class="material-symbols-outlined icon keybinds-help">help</span>
+      </div>
       <textarea class="editor-area"
                 name="content"
                 placeholder="Start typing..."
