@@ -63,6 +63,35 @@ kbd {
   text-transform: uppercase;
 }
 
+code {
+  background-color: var(--clr-gray-200);
+  font-weight: 500;
+  border: 1px solid var(--clr-gray-500);
+  padding: 4px;
+  border-radius: 4px;
+}
+
+blockquote {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  background-color: var(--clr-gray-200);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+blockquote p:first-of-type {
+  margin-inline-start: 16px;
+}
+
+blockquote p:first-of-type::before {
+  content: "“";
+}
+
+blockquote p:first-of-type::after {
+  content: "”";
+}
+
 .container {
   width: 80%;
   max-width: 800px;
