@@ -4,7 +4,7 @@ const actionsContainer = document.querySelector("ul.actions");
 const keybindHelpIcon = document.querySelector(".keybinds-help");
 const keybindHelpDialog = document.querySelector(".keybinds-dialog");
 
-const fieldPattern = "<<[A-z.]+>>";
+const fieldPattern = "<<[A-z0-9.]+>>";
 const fieldRegex = new RegExp(fieldPattern);
 const fieldRegexGlobal = new RegExp(fieldPattern, "g");
 
