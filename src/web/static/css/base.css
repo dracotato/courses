@@ -11,8 +11,32 @@ html {
 
 body {
   background-color: var(--clr-gray-100);
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 400;
   color: var(--clr-gray-900);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
 }
 
 form {
@@ -97,6 +121,20 @@ blockquote p:first-of-type::after {
   max-width: 800px;
   flex-grow: 1;
   margin: 0 auto;
+}
+
+.container.center-h {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container.gap {
+  gap: 16px;
+}
+
+.clr-primary {
+  color: var(--clr-primary-500);
 }
 
 .topbar {

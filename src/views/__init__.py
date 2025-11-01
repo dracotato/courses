@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask
+from flask import Blueprint, Flask, render_template
 
 from .auth import auth_bp
 from .lesson import lesson_bp
@@ -14,4 +14,4 @@ def register_blueprints(app: Flask):
 
 @root_bp.route("/")
 def index():
-    return "Welcome Home!"
+    return render_template("home.html")
