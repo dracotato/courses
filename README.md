@@ -44,7 +44,7 @@ Your typical courses platform.
 
 ## Contributing
 
-Always push to dev and then create a pull-request to merge into main.
+Push your branch and open a pull-request.
 
 ### Commit Message Format
 
