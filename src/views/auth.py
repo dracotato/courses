@@ -11,7 +11,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from src.db import get_db
+from src.db import db_execute
 from src.utils import join_web
 
 auth_bp: Blueprint = Blueprint(
@@ -19,62 +19,69 @@ auth_bp: Blueprint = Blueprint(
 )
 
 
+# called before each request
 def load_user():
-    user_id = session.get("user_id")
-    if user_id:
-        user = (
-            get_db().execute("SELECT * FROM user WHERE userid = ?", (user_id,))
-        ).fetchone()
+    session_id = session.get("session_id")
+    if session_id:
+        user_session = db_execute(
+            "SELECT * FROM session WHERE sessionid = ?",
+            params=(session_id,),
+            fetch_type=1,
+        )
+        if not user_session:  # invalid local session
+            session.pop("session_id")
+            return redirect(url_for("auth.login"))
+
+        user = db_execute(
+            "SELECT * FROM user WHERE userid = ?",
+            params=(user_session["user"],),
+            fetch_type=1,
+        )
         g.user = user
 
 
 @auth_bp.route("/register/", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        db = get_db()
         formdata = request.form
-        print(formdata)
         valid = True
 
         # validity checks
-        if not all(formdata):
+        if not all(formdata):  # prevents any optional fields
             valid = False
-            print("Null")
         if not fullmatch(r"[a-zA-Z0-9]+", formdata["username"]):
             valid = False
-            print("Username")
         if not fullmatch(
             r"[a-zA-Z0-9-.]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+", formdata["email"]
         ):
             valid = False
-            print("Email")
         if len(formdata["password"]) < 8:
             valid = False
-            print("Password")
         if formdata["password"] != formdata["confirm-password"]:
             valid = False
-            print("Inequal")
-        if db.execute(
-            "SELECT * FROM user WHERE username = ?", (formdata["username"],)
-        ).fetchone():
+        if db_execute(
+            "SELECT * FROM user WHERE username = ?",
+            params=(formdata["username"],),
+            fetch_type=1,
+        ):
             valid = False
-            print("Username exists")
-        if db.execute(
-            "SELECT * FROM user WHERE email = ?", (formdata["email"],)
-        ).fetchone():
+        if db_execute(
+            "SELECT * FROM user WHERE email = ?",
+            params=(formdata["email"],),
+            fetch_type=1,
+        ):
             valid = False
-            print("Email exists")
 
         if valid:
-            db.execute(
+            db_execute(
                 "INSERT INTO user(username,email,password) VALUES (?,?,?)",
-                (
+                params=(
                     formdata["username"],
                     formdata["email"],
                     generate_password_hash(formdata["password"]),
                 ),
+                commit=True,
             )
-            db.commit()
             return redirect(url_for("auth.login"))
 
     return render_template("register.html", title="Register")
@@ -83,16 +90,37 @@ def register():
 @auth_bp.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        db = get_db()
         formdata = request.form
 
-        result = db.execute(
+        result = db_execute(
             "SELECT * FROM user WHERE username = :cred OR email = :cred",
-            {"cred": formdata["cred"]},
-        ).fetchone()
+            params={"cred": formdata["cred"]},
+            fetch_type=1,
+        )
+
+        if not result:
+            return "error in email or password."
 
         if check_password_hash(result["password"], formdata["password"]):
-            session["user_id"] = result["userid"]
+            session["session_id"] = db_execute(
+                "INSERT INTO session(useragent,user) VALUES (?,?)",
+                params=(request.user_agent.string, result["userid"]),
+                commit=True,
+                return_rowid=True,
+            )
             return redirect(url_for("root.index"))
 
     return render_template("login.html", title="Login")
+
+
+@auth_bp.route("/logout/", methods=["GET"])
+def logout():
+    if session["session_id"]:
+        db_execute(
+            "DELETE FROM session WHERE sessionid = ?",
+            params=(session["session_id"],),
+            commit=True,
+        )
+        session.pop("session_id")
+
+    return redirect(url_for("auth.login"))

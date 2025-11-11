@@ -1,5 +1,6 @@
 import sqlite3
 from os import path
+from typing import Any
 
 import click
 from flask import Flask, g
@@ -17,6 +18,56 @@ def get_db() -> sqlite3.Connection:
         g.db.execute("PRAGMA foreign_keys = ON;")  # enable foreign keys
 
     return g.db
+
+
+def db_execute(
+    query: str,
+    params: tuple | dict | None = None,
+    fetch_type=0,
+    fetch_size=1,
+    commit=False,
+    return_rowid=False,
+) -> list[Any] | Any | None:
+    """
+    execute a query on the db and optionally return the result
+
+    fetch:
+        0 (default) — fetch nothing
+        1 — equivalent to fetchone()
+        2 — equivalent to fetchmany(), also set fetch_size
+        3 — equivalent to fetchall()
+
+    commit:
+        if set to true then also commit the transactions.
+
+    return_rowid:
+        return the rowid of the last created record.
+        Note: discards fetch.
+    """
+    db = get_db()
+
+    if params:
+        cur = db.execute(query, params)
+    else:
+        cur = db.execute(query)
+
+    result = None
+
+    if return_rowid:
+        result = cur.lastrowid
+
+    elif fetch_type == 1:
+        result = cur.fetchone()
+    elif fetch_type == 2:
+        result = cur.fetchmany(fetch_size)
+    elif fetch_type == 3:
+        result = cur.fetchall()
+
+    cur.close()
+    if commit:
+        db.commit()
+
+    return result
 
 
 def close_db(_=None):
