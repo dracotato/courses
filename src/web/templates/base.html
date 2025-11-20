@@ -10,12 +10,14 @@
           rel="stylesheet">
     {# icons #}
     {# the icons query needs to be alphabetically ordered #}
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=add_box,close,dashboard,help,home,login,logout,menu,person_add,settings,sms"
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=add_box,close,help,home,login,logout,menu,person_add"
           rel="stylesheet" />
     {# css #}
     <link href="{{ url_for("static", filename="css/variables.css") }}"
           rel="stylesheet">
     <link href="{{ url_for("static", filename="css/base.css") }}"
+          rel="stylesheet">
+    <link href="{{ url_for("static", filename="css/layout.css") }}"
           rel="stylesheet">
     <link href="{{ url_for("static", filename="css/components.css") }}"
           rel="stylesheet">
@@ -27,92 +29,73 @@
     </title>
   </head>
   <body>
-    <nav class="topbar">
+    <header class="topbar">
       <span class="material-symbols-outlined icon menu-icon">menu</span>
-      <h3>
+      <span class="material-symbols-outlined icon close-icon">close</span>
+      <p class="bold">
         Courses
         {% if title %}— {{ title }}{% endif %}
-      </h3>
-    </nav>
-    <div class="sidebar">
-      <span class="material-symbols-outlined icon close-icon">close</span>
-      <ul class="links">
-        <li>
-          <a href="{{ url_for("root.index") }}">
-            <span class="icon-text">
-              <span class="material-symbols-outlined icon">home</span> Home
-            </span>
-          </a>
-        </li>
-        {% if g.user %}
-          <li>
-            <a href="" class="wip" title="Work In Progress">
-              <span class="icon-text">
-                <span class="material-symbols-outlined icon">dashboard</span> Dashboard
-              </span>
-            </a>
-          </li>
-          <hr>
-          <li>
-            <a href="" class="wip" title="Work In Progress">
-              <span class="icon-text">
-                <span class="material-symbols-outlined icon">add_box</span> New Course
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for("lesson.create") }}">
-              <span class="icon-text">
-                <span class="material-symbols-outlined icon">add_box</span> New Lesson
-              </span>
-            </a>
-          </li>
-          <hr>
-          <li>
-            <a href="" class="wip" title="Work In Progress">
-              <span class="icon-text">
-                <span class="material-symbols-outlined icon">settings</span> Settings
-              </span>
-            </a>
-          </li>
-        {% endif %}
-        <hr>
-        <li>
-          <a href="" class="wip" title="Work In Progress">
-            <span class="icon-text">
-              <span class="material-symbols-outlined icon">sms</span> Contact Us
-            </span>
-          </a>
-        </li>
-        <hr>
-        {% if g.user %}
-          <li>
-            <a href="{{ url_for("auth.logout") }}">
-              <span class="icon-text">
-                <span class="material-symbols-outlined icon">logout</span> Log Out
-              </span>
-            </a>
-          </li>
-        {% else %}
-          <li>
-            <a href="{{ url_for("auth.login") }}">
-              <span class="icon-text">
-                <span class="material-symbols-outlined icon">login</span> Log In
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url_for("auth.register") }}">
-              <span class="icon-text">
-                <span class="material-symbols-outlined icon">person_add</span> Register
-              </span>
-            </a>
-          </li>
-        {% endif %}
-      </ul>
+      </p>
+    </header>
+    <div class="wrapper">
+      <aside class="sidebar">
+        <nav>
+          <ul class="links">
+            <li>
+              <a href="{{ url_for("root.index") }}">
+                <span class="icon-text">
+                  <span class="material-symbols-outlined icon">home</span>
+                  <span class="text">Home</span>
+                </span>
+              </a>
+            </li>
+            <hr>
+            {% if g.user %}
+              <li>
+                <a href="{{ url_for("lesson.create") }}">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">add_box</span>
+                    <span class="text">New Lesson</span>
+                  </span>
+                </a>
+              </li>
+              <hr>
+            {% endif %}
+            {% if g.user %}
+              <li>
+                <a href="{{ url_for("auth.logout") }}">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">logout</span>
+                    <span class="text">Log Out</span>
+                  </span>
+                </a>
+              </li>
+            {% else %}
+              <li>
+                <a href="{{ url_for("auth.login") }}">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">login</span>
+                    <span class="text">Log In</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for("auth.register") }}">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">person_add</span>
+                    <span class="text">Register</span>
+                  </span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </aside>
+      <main>
+        {% block body %}
+        {% endblock body %}
+      </main>
     </div>
-    {% block body %}
-    {% endblock body %}
     <script src="{{ url_for("static", filename="js/base.js")}}"></script>
   </body>
 </html>

@@ -1,10 +1,6 @@
 {% extends "base.html" %}
-{% block head %}
-  <link href="{{ url_for("static", filename="css/lessons.css") }}"
-        rel="stylesheet">
-{% endblock head %}
 {% block body %}
-  <div class="container">
+  <div class="container screen-height pad-top pad-btm">
     <dialog class="keybinds-dialog" closedby="any">
       <div class="keybinds-container">
         <div class="keybind">
@@ -84,7 +80,7 @@
           </li>
         </li>
       </ul>
-      <button type="submit">Save</button>
+      <button type="submit" class="primary">Save</button>
     </div>
   </form>
 </div>

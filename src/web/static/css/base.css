@@ -1,117 +1,74 @@
 * {
-  font-family: "Inter", sans-serif;
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
 }
 
 html {
-  font-size: 16px;
+  font-size: clamp(1rem, 3vw, 1.2rem);
 }
 
 body {
   background-color: var(--clr-gray-100);
-  font-size: 1rem;
-  font-weight: 400;
   color: var(--clr-gray-900);
+  font-family: "Inter", sans-serif;
 }
 
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   font-weight: 700;
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 3.815rem;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 3.052rem;
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 2.441rem;
 }
 
-h4 {
-  font-size: 1.25rem;
+h4,
+h5,
+h6 {
+  font-size: 1.953rem;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+p,
+input,
+textarea {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
-.auth-form button[type="submit"] {
-  margin-top: 48px;
-  align-self: end;
+input,
+textarea,
+button {
+  font-family: "Inter", sans-serif;
 }
 
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.input-container input {
-  padding: 8px 12px;
+button,
+b,
+strong,
+.btn,
+.bold {
+  font-weight: 700;
 }
 
 button,
 .btn {
-  background-color: var(--clr-gray-50);
-  width: fit-content;
-  padding: 8px 12px;
-  border: 2px solid var(--clr-gray-900);
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 8px;
-  cursor: pointer;
+  font-size: 0.9rem;
 }
 
-button[type="submit"] {
-  background-color: var(--clr-primary-50);
-}
-
-kbd {
-  min-width: 40px; /* ensure all 1 chars are the same width */
-  margin-bottom: 4px;
-  padding: 6px 12px;
-  border: 2px solid var(--clr-gray-900);
-  border-bottom-width: 4px;
-  border-radius: 8px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-code {
-  background-color: var(--clr-gray-200);
-  font-weight: 500;
-  border: 1px solid var(--clr-gray-500);
-  padding: 4px;
-  border-radius: 4px;
-}
-
-blockquote {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  background-color: var(--clr-gray-200);
-  padding: 15px;
-  border-radius: 4px;
-}
-
-blockquote p:first-of-type {
-  margin-inline-start: 16px;
-}
-
-blockquote p:first-of-type::before {
-  content: "“";
-}
-
-blockquote p:first-of-type::after {
-  content: "”";
+small,
+.small {
+  font-size: 0.8rem;
 }

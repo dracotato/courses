@@ -1,0 +1,127 @@
+html,
+body {
+  height: 100vh;
+  max-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  gap: 24px;
+  background-color: var(--clr-gray-050);
+  padding: 16px var(--space-sidebar-pad);
+  border-bottom: 1px solid var(--clr-gray-200);
+  align-items: center; /* ensure the icon and text are centered vertically */
+}
+
+/* hide the menu icon if the sidebar is open */
+body:has(.sidebar.open) .topbar .menu-icon {
+  display: none;
+}
+
+/* hide the close icon if the sidebar is not open */
+body:not(:has(.sidebar.open)) .topbar .close-icon {
+  display: none;
+}
+
+/* Main Wrapper */
+.wrapper {
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1; /* fill body */
+  position: relative; /* for the sidebar */
+}
+
+.wrapper > .sidebar {
+  overflow-y: auto;
+}
+
+.wrapper > main {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: var(--clr-gray-050);
+  min-width: fit-content;
+  height: 100%;
+  padding: var(--space-sidebar-pad);
+  border-right: 1px solid var(--clr-gray-200);
+  position: absolute;
+  left: 0;
+  transform: translateX(-100%);
+  z-index: 1;
+  transition: transform 200ms ease-in-out;
+}
+
+.sidebar.open {
+  transform: translateX(0%);
+}
+
+.sidebar nav {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.sidebar .links {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.sidebar hr {
+  color: var(--clr-gray-200);
+}
+
+.sidebar a {
+  display: block;
+  color: inherit;
+  padding: 12px 8px;
+  text-decoration: none;
+  transition: background-color 200ms ease-out;
+}
+
+.sidebar a:hover {
+  background-color: var(--clr-gray-200);
+}
+
+/* Container and Co. */
+.container {
+  max-width: var(--size-max-width);
+  margin: 0 auto;
+  padding-inline: var(--space-screen-hgap);
+}
+
+/* used to keep some distance from the topbar */
+.container.pad-top {
+  padding-top: var(--space-screen-vgap);
+}
+
+/* stay away from screen edges */
+.container.pad-btm {
+  padding-bottom: var(--space-screen-vgap);
+}
+
+.container.screen-height {
+  height: 100%;
+}
+
+/* Utilities */
+.center-text {
+  text-align: center;
+}
+
+.margin-btm {
+  margin-bottom: 12px;
+}
+
+/* Colors */
+.clr-primary {
+  color: var(--clr-primary-500);
+}
