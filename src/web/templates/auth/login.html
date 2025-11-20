@@ -1,9 +1,10 @@
 {% extends "base_auth.html" %}
 {% block form %}
   <div class="input-container">
-    <label for="id">Email or Username</label>
+    <label for="cred">Email or Username</label>
     <input type="text"
            name="cred"
+           id="cred"
            placeholder="usrx18@gmail.com or usrx18"
            autocomplete="email"
            required>
@@ -12,7 +13,8 @@
     <label for="password">Password</label>
     <input type="password"
            name="password"
-           placeholder="your password..."
+           id="password"
+           placeholder="Your password..."
            autocomplete="current-password"
            required>
   </div>
