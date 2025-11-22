@@ -14,13 +14,16 @@
     </dialog>
     <form class="editor" method="post">
       <div class="title-container">
-        <input name="title" required placeholder="Enter title...">
+        <input name="title"
+               required
+               placeholder="Enter title..."
+               value="{{ lesson_title }}">
         <span class="material-symbols-outlined icon keybinds-help">help</span>
       </div>
       <textarea class="editor-area"
                 name="content"
                 placeholder="Start typing..."
-                required></textarea>
+                required>{{ lesson_content }}</textarea>
       <div class="actions-container">
         <ul class="actions">
           <li>
