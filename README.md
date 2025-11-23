@@ -2,6 +2,15 @@
 
 Your typical courses platform.
 
+## Tech Stack
+
+- Flask
+- Sqlite3
+- Vanilla JS
+
+I am trying to implement as much stuff from scratch as I can,
+with the least amount of libraries for this project.
+
 ## Setup
 
 1. Clone
@@ -21,25 +30,18 @@ Your typical courses platform.
    uv sync
    ```
 
-3. Add this to a `.env` file in the root directory
+3. Set environment variables (take a look at `.env.example`)
+
+4. Initialize the db (be sure to be in the root directory, or set the app path manually)
 
    ```bash
-   FLASK_APP=src # Specify the module that contains the app factory
-   # i.e. the create_app function
-   FLASK_DEBUG=1 # Enable debug mode by default
-   SECRET_KEY=some-strong-random-key
+   uv run -- flask init-db
    ```
 
-4. Initialize the db (be sure to be in the root directory)
+5. Run the app (also in the root directory, or set the app path manually)
 
    ```bash
-   uv run flask init-db
-   ```
-
-5. Run the app (also in the root directory)
-
-   ```bash
-   uv run flask
+   uv run -- flask run
    ```
 
 ## Contributing
@@ -102,7 +104,7 @@ otherwise use multi-line commits. (see below)
   the app doesn't need unique identification
 
   # footer, can be useful for metadata
-  issue #122
+  closes: #122
   ```
 
   If you need to include more info,
