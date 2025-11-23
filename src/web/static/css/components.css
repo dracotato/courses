@@ -1,11 +1,15 @@
 /* Button Component */
 button,
 .btn {
+  display: block;
   background-color: var(--clr-gray-050);
+  color: inherit;
   padding: 8px 12px;
   border: 2px solid var(--clr-gray-900);
   border-radius: 8px;
+  text-align: center;
   cursor: pointer;
+  text-decoration: none;
 }
 
 @media (max-width: 449px) {
@@ -233,4 +237,32 @@ iframe.yt {
 
 :not(.icon-text) > .icon:hover {
   color: var(--clr-gray-300);
+}
+
+/* Dropdown Menu Component */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--clr-gray-100);
+  padding: 16px 24px;
+  border: 2px solid var(--clr-gray-900);
+  border-radius: 8px;
+  list-style-type: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1;
+}
+
+.dropdown.open .dropdown-content {
+  display: flex;
+}
+
+.dropdown-content li > * {
+  width: 100%;
 }

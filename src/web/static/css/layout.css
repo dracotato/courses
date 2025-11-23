@@ -112,6 +112,18 @@ body:not(:has(.sidebar.open)) .topbar .close-icon {
   height: 100%;
 }
 
+.flex-container {
+  display: flex;
+}
+
+.flex-container.space-between {
+  justify-content: space-between;
+}
+
+.flex-container.align-center {
+  align-items: center;
+}
+
 /* Utilities */
 .center-text {
   text-align: center;
