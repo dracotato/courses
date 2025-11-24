@@ -256,7 +256,7 @@ iframe.yt {
   position: absolute;
   top: 100%;
   right: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .dropdown.open .dropdown-content {
@@ -265,4 +265,44 @@ iframe.yt {
 
 .dropdown-content li > * {
   width: 100%;
+}
+
+/* Course Viewer */
+header.course-header {
+  background-color: var(--clr-primary-050);
+  margin-bottom: 62px;
+}
+
+.course-title {
+  margin-bottom: 8px;
+}
+
+.course-header-content p {
+  margin-bottom: 32px;
+}
+
+.lessons-container h3 {
+  margin-bottom: 32px;
+}
+
+.lessons-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lesson-card {
+  background-color: var(--clr-gray-050);
+  padding: 16px 24px;
+  border: 2px solid var(--clr-gray-900);
+  border-radius: 4px;
+}
+
+.lesson-card details[open] summary {
+  margin-bottom: 16px;
+}
+
+.lesson-card summary {
+  user-select: none;
+  cursor: pointer;
 }

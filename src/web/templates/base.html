@@ -52,6 +52,14 @@
             <hr>
             {% if g.user %}
               <li>
+                <a href="{{ url_for("course.create") }}">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">add_box</span>
+                    <span class="text">New Course</span>
+                  </span>
+                </a>
+              </li>
+              <li>
                 <a href="{{ url_for("lesson.create") }}">
                   <span class="icon-text">
                     <span class="material-symbols-outlined icon">add_box</span>

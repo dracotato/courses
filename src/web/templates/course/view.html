@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block body %}
+  <header class="course-header">
+    <div class="container pad-top pad-btm course-header-content">
+      <div class="flex-container space-between align-center course-title">
+        <h2>{{ course_title }}</h2>
+        {% if is_owner %}
+          <div class="dropdown">
+            <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
+            <ul class="dropdown-content">
+              <li>
+                <a href="{{ url_for("course.update", id=course_id) }}" class="btn">Edit</a>
+              </li>
+              <li>
+                <button onclick="deleteEnt('course', id={{ course_id }})">Delete</button>
+              </li>
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+      <p>{{ course_desc }}</p>
+      <small>By: {{ owner_username }}</small>
+    </div>
+  </header>
+  <div class="container pad-btm lessons-container">
+    <h3>Lessons</h3>
+    <div class="lessons-wrapper">
+      {% if lessons %}
+        {% for lesson in lessons %}
+          <section class="lesson-card">
+            <details>
+              <summary class="flex-container space-between align-center">
+                <h4>{{ lesson["title"] }}</h4>
+                {% if is_owner %}
+                  <div class="dropdown">
+                    <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
+                    <ul class="dropdown-content">
+                      <li>
+                        <a href="{{ url_for("lesson.update", id=lesson["lessonid"]) }}"
+                           class="btn">Edit</a>
+                      </li>
+                      <li>
+                        <button onclick="deleteEntity('lesson', id={{ lesson['lessonid'] }})">Delete</button>
+                      </li>
+                    </ul>
+                  </div>
+                {% endif %}
+              </summary>
+              <div>{{ lesson["desc"] }}</div>
+            </details>
+          </section>
+        {% endfor %}
+      {% else %}
+        It seems this course is still empty.
+      {% endif %}
+    </div>
+  </div>
+{% endblock body %}
