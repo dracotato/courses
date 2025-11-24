@@ -14,8 +14,9 @@ function closeSidebar() {
 }
 
 document.querySelectorAll(".dropdown").forEach((entry) => {
-  entry.querySelector(".dropdown-btn").addEventListener("click", (_) => {
+  entry.querySelector(".dropdown-btn").addEventListener("click", (e) => {
     entry.classList.toggle("open");
+    e.preventDefault();
   });
 });
 
@@ -33,20 +34,21 @@ document.addEventListener("click", (e) => {
   }
 });
 
-async function deleteLessons(lessonIds) {
-  const url = "/lesson/";
+async function deleteEnt(entity, ids) {
+  const url = `/${entity}/`;
 
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(lessonIds),
+    body: JSON.stringify(ids),
   });
 
   if (!response.ok) {
     console.log(`status code: ${response.status}`);
   } else {
+    // do something with this later
     console.log(await response.json());
   }
 }

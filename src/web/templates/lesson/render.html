@@ -11,7 +11,7 @@
               <a href="{{ url_for("lesson.update", id=lesson_id) }}" class="btn">Edit</a>
             </li>
             <li>
-              <button onclick="deleteLessons(id=[{{ lesson_id }}])">Delete</button>
+              <button onclick="deleteEnt('lesson',id=[{{ lesson_id }}])">Delete</button>
             </li>
           </ul>
         </div>

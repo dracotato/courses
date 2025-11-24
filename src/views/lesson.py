@@ -4,7 +4,7 @@ from flask import current_app as ca
 from markdown import markdown
 
 from src.db import db_execute
-from src.utils import join_web
+from src.utils import EntityEnum, delete_entity, is_entity_owner, join_web
 
 lesson_bp: Blueprint = Blueprint(
     "lesson",
@@ -63,13 +63,13 @@ def view(id: int):
         lesson_title=lesson["title"],  # pyright: ignore
         content=content,
         lesson_id=lesson["lessonid"],  # pyright: ignore
-        is_owner=is_owner(lesson["lessonid"]),  # pyright: ignore
+        is_owner=is_entity_owner(EntityEnum.LESSON, lesson["lessonid"]),  # pyright: ignore
     )
 
 
 @lesson_bp.route("/<int:id>/", methods=["GET", "POST"])
 def update(id: int):
-    ownership = is_owner(id)
+    ownership = is_entity_owner(EntityEnum.LESSON, id)
     if ownership is None:  # lesson doesn't exist
         return abort(404)
     elif not ownership:
@@ -103,43 +103,12 @@ def delete():
 
     # one lesson
     if isinstance(body, int):
-        response[str(body)] = delete_lesson(body)
+        response[str(body)] = delete_entity(EntityEnum.LESSON, body)
     # many lessons
     elif isinstance(body, list) and all([isinstance(x, int) for x in body]):
         for id in body:
-            response[str(id)] = delete_lesson(id)
+            response[str(id)] = delete_entity(EntityEnum.LESSON, id)
     else:
         abort(400)  # bad request
 
     return json.jsonify(response)
-
-
-# Helper functions
-def is_owner(lesson_id: int):
-    """check if logged in user owns a lesson and return True, False, or None (if the lesson doesn't exist)"""
-    if not g.get("user"):
-        return False
-
-    lesson = db_execute(
-        query="SELECT owner FROM lesson WHERE lessonid = ?",
-        params=(lesson_id,),
-        fetch_type=1,
-    )
-
-    if not lesson:
-        return
-
-    return lesson["owner"] == g.get("user")["userid"]  # pyright: ignore
-
-
-def delete_lesson(lesson_id: int):
-    ownership = is_owner(lesson_id)
-    if ownership is None:
-        return 404
-    elif not ownership:
-        return 403
-
-    db_execute(
-        query="DELETE FROM lesson WHERE lessonid = ?", params=(lesson_id,), commit=True
-    )
-    return 200
