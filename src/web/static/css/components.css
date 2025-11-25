@@ -166,7 +166,6 @@ dialog::backdrop {
   flex-direction: column;
   height: 100%;
   gap: 24px;
-  padding: 48px 0;
 }
 
 .editor input {
