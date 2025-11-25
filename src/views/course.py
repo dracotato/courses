@@ -2,6 +2,7 @@ from flask import Blueprint, abort, g, json, redirect, render_template, request,
 
 from src.db import db_execute
 from src.utils import EntityEnum, delete_entity, is_entity_owner, join_web
+from src.views.auth import check_login
 
 course_bp: Blueprint = Blueprint(
     "course",
@@ -9,6 +10,8 @@ course_bp: Blueprint = Blueprint(
     url_prefix="/course",
     template_folder=join_web("templates/course"),
 )
+
+course_bp.before_request(check_login)
 
 
 @course_bp.route("/", methods=["GET", "POST"])

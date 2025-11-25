@@ -5,6 +5,7 @@ from markdown import markdown
 
 from src.db import db_execute
 from src.utils import EntityEnum, delete_entity, is_entity_owner, join_web
+from src.views.auth import check_login
 
 lesson_bp: Blueprint = Blueprint(
     "lesson",
@@ -12,6 +13,9 @@ lesson_bp: Blueprint = Blueprint(
     url_prefix="/lesson",
     template_folder=join_web("templates/lesson"),
 )
+
+
+lesson_bp.before_request(check_login)
 
 
 @lesson_bp.route("/", methods=["GET", "POST"])

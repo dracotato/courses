@@ -1,3 +1,4 @@
+import functools
 from re import fullmatch
 
 from flask import (
@@ -29,18 +30,57 @@ def load_user():
             fetch_type=1,
         )
         if not user_session:  # invalid local session
-            session.pop("session_id")
+            session.pop("session_id", None)
             return redirect(url_for("auth.login"))
 
-        user = db_execute(
+        g.user = db_execute(
             "SELECT * FROM user WHERE userid = ?",
-            params=(user_session["user"],),
+            params=(user_session["user"],),  # pyright: ignore
             fetch_type=1,
         )
-        g.user = user
+
+
+# these are supposed to be ran before each request
+def check_login():
+    if not g.get("user"):
+        # remember this page to come back after logging in
+        session["prev_location"] = request.url
+        return redirect(url_for("auth.login"))
+
+
+def check_logout():
+    if g.get("user"):
+        return redirect(url_for("root.index"))
+
+
+def logged_in(view):
+    """Decorates a view to allow access to logged-in users only."""
+
+    @functools.wraps(view)
+    def wrapper(*args, **kwargs):
+        if g.get("user"):
+            return view(*args, **kwargs)
+        else:
+            return redirect(url_for("auth.login"))
+
+    return wrapper
+
+
+def logged_out(view):
+    "Decorates a view to allow access to logged-out users only."
+
+    @functools.wraps(view)
+    def wrapper(*args, **kwargs):
+        if not g.get("user"):
+            return view(*args, **kwargs)
+        else:
+            return redirect(url_for("root.index"))
+
+    return wrapper
 
 
 @auth_bp.route("/register/", methods=["GET", "POST"])
+@logged_out
 def register():
     if request.method == "POST":
         formdata = request.form
@@ -88,6 +128,7 @@ def register():
 
 
 @auth_bp.route("/login/", methods=["GET", "POST"])
+@logged_out
 def login():
     if request.method == "POST":
         formdata = request.form
@@ -101,13 +142,17 @@ def login():
         if not result:
             return "error in email or password."
 
-        if check_password_hash(result["password"], formdata["password"]):
+        if check_password_hash(result["password"], formdata["password"]):  # pyright: ignore
             session["session_id"] = db_execute(
                 "INSERT INTO session(useragent,user) VALUES (?,?)",
-                params=(request.user_agent.string, result["userid"]),
+                params=(request.user_agent.string, result["userid"]),  # pyright: ignore
                 commit=True,
                 return_rowid=True,
             )
+            prev_location = session.get("prev_location")
+            if prev_location:
+                session.pop("prev_location", None)
+                return redirect(prev_location)
             return redirect(url_for("root.index"))
 
     return render_template("login.html", title="Login")
@@ -121,6 +166,6 @@ def logout():
             params=(session["session_id"],),
             commit=True,
         )
-        session.pop("session_id")
+        session.pop("session_id", None)
 
     return redirect(url_for("auth.login"))
