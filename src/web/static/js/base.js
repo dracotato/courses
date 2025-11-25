@@ -34,7 +34,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-async function deleteEnt(entity, ids) {
+async function deleteEnt(entity, ids, redirect = false) {
   const url = `/${entity}/`;
 
   const response = await fetch(url, {
@@ -48,7 +48,9 @@ async function deleteEnt(entity, ids) {
   if (!response.ok) {
     console.log(`status code: ${response.status}`);
   } else {
-    // do something with this later
-    console.log(await response.json());
+    if (redirect) {
+      console.log("redirecting you...");
+      location.replace("/");
+    }
   }
 }

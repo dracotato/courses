@@ -8,10 +8,11 @@
           <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
           <ul class="dropdown-content">
             <li>
-              <a href="{{ url_for("lesson.update", id=lesson_id) }}" class="btn">Edit</a>
+              <a href="{{ url_for("lesson.update", id=lesson_id, redirect=true) }}"
+                 class="btn">Edit</a>
             </li>
             <li>
-              <button onclick="deleteEnt('lesson',id=[{{ lesson_id }}])">Delete</button>
+              <button onclick="deleteEnt('lesson',id=[{{ lesson_id }}], redirect=true)">Delete</button>
             </li>
           </ul>
         </div>
