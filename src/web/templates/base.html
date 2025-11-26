@@ -52,7 +52,7 @@
             <hr>
             {% if g.user %}
               <li>
-                <a href="{{ url_for("course.create") }}">
+                <a href="{{ url_for("root.course.create") }}">
                   <span class="icon-text">
                     <span class="material-symbols-outlined icon">add_box</span>
                     <span class="text">New Course</span>
@@ -60,7 +60,7 @@
                 </a>
               </li>
               <li>
-                <a href="{{ url_for("lesson.create") }}">
+                <a href="{{ url_for("root.lesson.create") }}">
                   <span class="icon-text">
                     <span class="material-symbols-outlined icon">add_box</span>
                     <span class="text">New Lesson</span>
@@ -71,7 +71,7 @@
             {% endif %}
             {% if g.user %}
               <li>
-                <a href="{{ url_for("auth.logout") }}">
+                <a href="{{ url_for("root.auth.logout") }}">
                   <span class="icon-text">
                     <span class="material-symbols-outlined icon">logout</span>
                     <span class="text">Log Out</span>
@@ -80,7 +80,7 @@
               </li>
             {% else %}
               <li>
-                <a href="{{ url_for("auth.login") }}">
+                <a href="{{ url_for("root.auth.login") }}">
                   <span class="icon-text">
                     <span class="material-symbols-outlined icon">login</span>
                     <span class="text">Log In</span>
@@ -88,7 +88,7 @@
                 </a>
               </li>
               <li>
-                <a href="{{ url_for("auth.register") }}">
+                <a href="{{ url_for("root.auth.register") }}">
                   <span class="icon-text">
                     <span class="material-symbols-outlined icon">person_add</span>
                     <span class="text">Register</span>

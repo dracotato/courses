@@ -31,7 +31,7 @@ def load_user():
         )
         if not user_session:  # invalid local session
             session.pop("session_id", None)
-            return redirect(url_for("auth.login"))
+            return redirect(url_for(".login"))
 
         g.user = db_execute(
             "SELECT * FROM user WHERE userid = ?",
@@ -45,7 +45,7 @@ def check_login():
     if not g.get("user"):
         # remember this page to come back after logging in
         session["prev_location"] = request.url
-        return redirect(url_for("auth.login"))
+        return redirect(url_for(".login"))
 
 
 def check_logout():
@@ -61,7 +61,7 @@ def logged_in(view):
         if g.get("user"):
             return view(*args, **kwargs)
         else:
-            return redirect(url_for("auth.login"))
+            return redirect(url_for(".login"))
 
     return wrapper
 
@@ -122,7 +122,7 @@ def register():
                 ),
                 commit=True,
             )
-            return redirect(url_for("auth.login"))
+            return redirect(url_for(".login"))
 
     return render_template("register.html", title="Register")
 
@@ -168,4 +168,4 @@ def logout():
         )
         session.pop("session_id", None)
 
-    return redirect(url_for("auth.login"))
+    return redirect(url_for(".login"))

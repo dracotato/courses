@@ -41,7 +41,7 @@ def create():
             return_rowid=True,
         )
 
-        return redirect(url_for("lesson.view", id=lesson_id))
+        return redirect(url_for(".view", id=lesson_id))
     else:
         return render_template("editor.html", title="New Lesson")
 
@@ -90,7 +90,7 @@ def update(id: int):
             commit=True,
         )
 
-        return redirect(url_for("lesson.view", id=id))
+        return redirect(url_for(".view", id=id))
     else:
         return render_template(
             "editor.html",

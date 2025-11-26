@@ -9,7 +9,7 @@
             <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
             <ul class="dropdown-content">
               <li>
-                <a href="{{ url_for("course.update", id=course_id) }}" class="btn">Edit</a>
+                <a href="{{ url_for(".update", id=course_id) }}" class="btn">Edit</a>
               </li>
               <li>
                 <button onclick="deleteEnt('course', id={{ course_id }}, true)">Delete</button>
@@ -36,7 +36,7 @@
                     <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
                     <ul class="dropdown-content">
                       <li>
-                        <a href="{{ url_for("lesson.update", id=lesson["lessonid"]) }}"
+                        <a href="{{ url_for("root.lesson.update", id=lesson["lessonid"]) }}"
                            class="btn">Edit</a>
                       </li>
                       <li>

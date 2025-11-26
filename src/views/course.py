@@ -28,7 +28,7 @@ def create():
             return_rowid=True,
         )
 
-        return redirect(url_for("course.view", id=course_id))
+        return redirect(url_for(".view", id=course_id))
     else:
         return render_template("form.html", title="New Course")
 
@@ -75,7 +75,7 @@ def update(id: int):
             commit=True,
         )
 
-        return redirect(url_for("course.view", id=id))
+        return redirect(url_for(".view", id=id))
     else:
         return render_template(
             "form.html",
