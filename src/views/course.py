@@ -81,7 +81,7 @@ def update(id: int):
             "form.html",
             title="New Course",
             course_title=course["title"],  # pyright: ignore
-            course_content=course["desc"],  # pyright: ignore
+            course_desc=course["desc"],  # pyright: ignore
         )
 
 
