@@ -1,89 +1,138 @@
 {% extends "base.html" %}
 {% block body %}
   <div class="container screen-height pad-top pad-btm">
-    <dialog class="keybinds-dialog" closedby="any">
-      <div class="keybinds-container">
-        <div class="keybind">
-          <div class="keybind-title">Open This Menu (While Writing)</div>
-          <div class="keys">
-            <kbd>ctrl</kbd>
-            <kbd>/</kbd>
+    <form class="editor-form" method="post">
+      <div class="editor-form__title">
+        <select name="course" class="bold" required>
+          <option value="-1" {% if not courseid %}selected{% endif %} disabled>--select course--</option>
+          {% for course in owned_courses %}
+            <option value="{{ course["courseid"] }}"
+                    {% if courseid == course["courseid"] %}selected{% endif %}>{{ course["title"] }}</option>
+          {% endfor %}
+        </select>
+        <span class="bold">/</span>
+        <input type="text"
+               name="title"
+               placeholder="Enter Lesson Title"
+               value="{{ lesson_title }}"
+               required>
+      </div>
+      <div class="editor-form__content">
+        <div class="editor-form__formatbar">
+          <ul class="editor-form__formats">
+            <li>
+              <button type="button"
+                      data-template="# <<h1>>\n\n"
+                      data-keybind="ctrl+alt+1"
+                      title="H1">
+                <span class="material-symbols-outlined icon">format_h1</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="## <<h2>>\n\n"
+                      data-keybind="ctrl+alt+2"
+                      title="H2">
+                <span class="material-symbols-outlined icon">format_h2</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="### <<h3>>\n\n"
+                      data-keybind="ctrl+alt+3"
+                      title="H3">
+                <span class="material-symbols-outlined icon">format_h3</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="#### <<h4>>\n\n"
+                      data-keybind="ctrl+alt+4"
+                      title="H4">
+                <span class="material-symbols-outlined icon">format_h4</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="**<<bold>>**"
+                      data-keybind="ctrl+alt+b"
+                      title="Bold">
+                <span class="material-symbols-outlined icon">format_bold</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="*<<italic>>*"
+                      data-keybind="ctrl+alt+i"
+                      title="Italic">
+                <span class="material-symbols-outlined icon">format_italic</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="`<<code>>`"
+                      data-keybind="ctrl+alt+c"
+                      title="Code">
+                <span class="material-symbols-outlined icon">code</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="[<<title>>](<<link>>)"
+                      data-keybind="ctrl+alt+a"
+                      title="Link">
+                <span class="material-symbols-outlined icon">link</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="1. <<first>>\n2. <<second>>\n3. <<...>>"
+                      data-keybind="ctrl+alt+o"
+                      title="Number List">
+                <span class="material-symbols-outlined icon">format_list_numbered</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="- <<first>>\n- <<second>>\n- <<...>>"
+                      data-keybind="ctrl+alt+u"
+                      title="Bullet List">
+                <span class="material-symbols-outlined icon">format_list_bulleted</span>
+              </button>
+            </li>
+            <li>
+              <button type="button"
+                      data-template="> <<quote>>\n> <<line2>>\n\n>— <<author>>"
+                      data-keybind="ctrl+alt+q"
+                      title="Quote">
+                <span class="material-symbols-outlined icon">format_quote</span>
+              </button>
+            </li>
+          </li>
+        </ul>
+        <dialog class="keybinds-dialog" closedby="any">
+          <div class="keybinds-container">
+            <div class="keybind">
+              <div class="keybind-title">Open This Menu (While Writing)</div>
+              <div class="keys">
+                <kbd>ctrl</kbd>
+                <kbd>/</kbd>
+              </div>
+            </div>
           </div>
-        </div>
+        </dialog>
+        <button class="keybinds-help" title="Help">
+          <span class="material-symbols-outlined icon">help</span>
+        </button>
       </div>
-    </dialog>
-    <form class="editor" method="post">
-      <div class="title-container">
-        <input name="title"
-               required
-               placeholder="Enter title..."
-               value="{{ lesson_title }}">
-        <span class="material-symbols-outlined icon keybinds-help">help</span>
-      </div>
-      <textarea class="editor-area"
+      <textarea class="editor-form__editor"
                 name="content"
-                placeholder="Start typing..."
+                placeholder="Start Typing..."
                 required>{{ lesson_content }}</textarea>
-      <div class="actions-container">
-        <ul class="actions">
-          <li>
-            <button type="button" data-template="# <<h1>>\n\n" data-keybind="ctrl+alt+1">H1</button>
-          </li>
-          <li>
-            <button type="button" data-template="## <<h2>>\n\n" data-keybind="ctrl+alt+2">H2</button>
-          </li>
-          <li>
-            <button type="button"
-                    data-template="### <<h3>>\n\n"
-                    data-keybind="ctrl+alt+3">H3</button>
-          </li>
-          <li>
-            <button type="button"
-                    data-template="#### <<h4>>\n\n"
-                    data-keybind="ctrl+alt+4">H4</button>
-          </li>
-          <li>
-            <button type="button"
-                    data-template="##### <<h5>>\n\n"
-                    data-keybind="ctrl+alt+5">H5</button>
-          </li>
-          <li>
-            <button type="button"
-                    data-template="###### <<h6>>\n\n"
-                    data-keybind="ctrl+alt+6">H6</button>
-          </li>
-          <li>
-            <button type="button" data-template="**<<bold>>**" data-keybind="ctrl+alt+b">Bold</button>
-          </li>
-          <li>
-            <button type="button" data-template="*<<italic>>*" data-keybind="ctrl+alt+i">Italic</button>
-          </li>
-          <li>
-            <button type="button" data-template="`<<code>>`" data-keybind="ctrl+alt+c">Inline Code</button>
-          </li>
-          <li>
-            <button type="button"
-                    data-template="[<<title>>](<<link>>)"
-                    data-keybind="ctrl+alt+a">Link</button>
-          </li>
-          <li>
-            <button type="button"
-                    data-template="1. <<first>>\n2. <<second>>\n3. <<...>>"
-                    data-keybind="ctrl+alt+o">Ordered List</button>
-          </li>
-          <li>
-            <button type="button"
-                    data-template="- <<first>>\n- <<second>>\n- <<...>>"
-                    data-keybind="ctrl+alt+u">Unordered List</button>
-          </li>
-          <li>
-            <button type="button"
-                    data-template="> <<quote>>\n> <<line2>>\n\n>— <<author>>"
-                    data-keybind="ctrl+alt+q">Quote</button>
-          </li>
-        </li>
-      </ul>
-      <button type="submit" class="primary">Save</button>
+    </div>
+    <div class="editor-form__actions">
+      <button type="submit" name="batch" value="1">Write Another</button>
+      <button type="submit" class="primary" name="batch" value="0">Save</button>
     </div>
   </form>
 </div>

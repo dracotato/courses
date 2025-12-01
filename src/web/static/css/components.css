@@ -151,63 +151,102 @@ dialog::backdrop {
   gap: 6px;
 }
 
-.title-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.title-container .icon {
-  color: var(--clr-gray-500);
-}
-
-.editor {
+.editor-form {
   display: flex;
   flex-direction: column;
+  gap: 14px;
   height: 100%;
-  gap: 24px;
 }
 
-.editor input {
-  background-color: inherit;
+.editor-form__title,
+.editor-form__content {
+  background-color: var(--clr-gray-050);
+  border: 2px solid var(--clr-gray-900);
+  border-radius: 8px;
+}
+
+.editor-form__title {
+  display: flex;
+  gap: 4px;
+  padding: 6px 12px;
+}
+
+/* TODO: make select fit content */
+.editor-form__title select {
+  appearance: none;
+  background-color: transparent;
+  max-width: 35%;
+  text-overflow: ellipsis;
   border: none;
-  flex-grow: 1;
+  font-size: inherit;
 }
 
-.editor .editor-area {
-  background-color: inherit;
-  flex-grow: 1;
-  border: none;
-  resize: none;
+.editor-form__title span {
+  position: relative;
+  /* make the "/" on bottom aligned to the others */
+  bottom: -3px;
 }
 
-.editor .editor-area:focus,
-.editor input {
+.editor-form__title input {
+  flex-grow: 1;
+  width: 100%;
   border: none;
   outline: none;
 }
 
-.editor .actions-container {
+.editor-form__content {
   display: flex;
-  gap: 32px;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
-.editor .actions {
+.editor-form__formatbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+  gap: 16px;
+  width: 100%;
+  border-bottom: 2px solid var(--clr-gray-900);
+}
+
+.editor-form__formats {
+  display: flex;
+  width: 100%;
+  overflow-y: auto;
+  text-wrap: nowrap;
+  list-style: none;
+  scrollbar-width: none;
+}
+
+.editor-form__formatbar button {
+  width: fit-content;
+  border-radius: 4px;
+  padding: 4px 8px;
+  border: none;
+  outline: none;
+}
+
+.editor-form__formatbar button:hover,
+.editor-form__formatbar button:focus-visible {
+  background-color: var(--clr-primary-050);
+}
+
+.editor-form__editor {
+  width: 100%;
+  flex-grow: 1;
+  padding: 16px;
+  border-radius: none;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.editor-form__actions {
   display: flex;
   gap: 8px;
-  width: 100%;
-  overflow: scroll;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.editor .actions li {
-  display: inline;
-}
-
-.editor .actions button {
-  text-wrap: nowrap;
+  justify-content: flex-end;
 }
 
 /* YT Iframe Component */
@@ -234,9 +273,9 @@ iframe.yt {
   transition: color 100ms ease-out;
 }
 
-:not(.icon-text) > .icon:hover {
-  color: var(--clr-gray-300);
-}
+/* :not(.icon-text) > .icon:hover { */
+/*   color: var(--clr-gray-300); */
+/* } */
 
 /* Dropdown Menu Component */
 .dropdown {

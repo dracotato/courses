@@ -1,5 +1,5 @@
-const editorArea = document.querySelector("textarea.editor-area");
-const actionsContainer = document.querySelector("ul.actions");
+const editorArea = document.querySelector(".editor-form__editor");
+const formatsContainer = document.querySelector(".editor-form__formats");
 
 const keybindHelpIcon = document.querySelector(".keybinds-help");
 const keybindHelpDialog = document.querySelector(".keybinds-dialog");
@@ -15,14 +15,14 @@ keybindHelpIcon.addEventListener("click", (_) => {
   keybindHelpDialog.showModal();
 });
 
-for (let i = 0; i < actionsContainer.children.length; i++) {
-  const actionBtn = actionsContainer.children[i].querySelector("button");
-  const dataset = actionBtn.dataset;
+for (let i = 0; i < formatsContainer.children.length; i++) {
+  const formatBtn = formatsContainer.children[i].querySelector("button");
+  const dataset = formatBtn.dataset;
 
   dataset.template = dataset.template.replaceAll("\\n", "\n");
 
   // handle shortcut buttons' click event
-  actionBtn.addEventListener("click", (_) => {
+  formatBtn.addEventListener("click", (_) => {
     setFormat(dataset.template);
   });
 
@@ -39,7 +39,7 @@ for (let i = 0; i < actionsContainer.children.length; i++) {
   newKeybind.classList.add("keybind");
 
   let newKeybindTitle = document.createElement("div");
-  newKeybindTitle.innerText = actionBtn.innerText;
+  newKeybindTitle.innerText = formatBtn.getAttribute("title"); // use the elements' title
   newKeybindTitle.classList.add("keybind-title");
   newKeybind.appendChild(newKeybindTitle); // append under newKeybind
 
@@ -67,8 +67,8 @@ for (let i = 0; i < actionsContainer.children.length; i++) {
 // handle keybind
 editorArea.addEventListener("keydown", (e) => {
   if (e.key === "Tab") {
-    e.preventDefault();
     if (selectNextField !== undefined) {
+      e.preventDefault(); // don't hog the tab key unless there's a next field
       selectNextField();
     }
   } else if (e.key === "/" && e.ctrlKey) {

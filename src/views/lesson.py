@@ -21,29 +21,44 @@ lesson_bp.before_request(check_login)
 @lesson_bp.route("/", methods=["GET", "POST"])
 def create():
     if request.method == "POST":
-        # TODO: remove this block after course routes are implemented
-        if db_execute(query="SELECT count(*) FROM course", fetch_type=1) is not None:
+        form = request.form
+        print(form)
+        if (
             db_execute(
-                query="INSERT INTO course (title,desc,owner) VALUES (?,?,?)",
-                params=("default title", "default desc", 1),
-                commit=True,
+                query="SELECT * FROM course WHERE courseid = ? AND owner = ?",
+                params=(form["course"], g.get("user")["userid"]),
+                fetch_type=1,
             )
+            and form["title"]
+            and form["content"]
+        ):
+            lesson_id = db_execute(
+                query="INSERT INTO lesson (title, content, owner, course) VALUES (?,?,?,?)",
+                params=(
+                    form["title"],
+                    form["content"],
+                    g.get("user")["userid"],
+                    form["course"],
+                ),
+                commit=True,
+                return_rowid=True,
+            )
+            if form["batch"] == "0":
+                return redirect(url_for(".view", id=lesson_id))
+        else:
+            return abort(400)
 
-        lesson_id = db_execute(
-            query="INSERT INTO lesson (title, content, owner, course) VALUES (?,?,?,?)",
-            params=(
-                request.form["title"],
-                request.form["content"],
-                g.get("user")["userid"],
-                1,
-            ),
-            commit=True,
-            return_rowid=True,
-        )
-
-        return redirect(url_for(".view", id=lesson_id))
-    else:
-        return render_template("editor.html", title="New Lesson")
+    owned_courses = db_execute(
+        query="SELECT * FROM course WHERE owner = ?",
+        params=(g.get("user")["userid"],),
+        fetch_type=3,
+    )
+    if not owned_courses:
+        # TODO: flash a message telling the user why they were redirected
+        return redirect(url_for("root.course.create"))
+    return render_template(
+        "editor.html", title="New Lesson", owned_courses=owned_courses
+    )
 
 
 @lesson_bp.route("/v/<int:id>/")
@@ -79,25 +94,31 @@ def update(id: int):
     elif not ownership:
         return abort(403)
 
-    lesson = db_execute(
-        "SELECT * FROM lesson where lessonid = ?", params=(id,), fetch_type=1
-    )
-
     if request.method == "POST":
+        form = request.form
         db_execute(
-            query="UPDATE lesson SET title = ?, content = ? WHERE lessonid = ?",
-            params=(request.form["title"], request.form["content"], id),
+            query="UPDATE lesson SET course = ?, title = ?, content = ? WHERE lessonid = ?",
+            params=(form["course"], form["title"], form["content"], id),
             commit=True,
         )
 
         return redirect(url_for(".view", id=id))
-    else:
-        return render_template(
-            "editor.html",
-            title="New Lesson",
-            lesson_title=lesson["title"],  # pyright: ignore
-            lesson_content=lesson["content"],  # pyright: ignore
-        )
+
+    lesson = db_execute(
+        "SELECT * FROM lesson where lessonid = ?", params=(id,), fetch_type=1
+    )
+    return render_template(
+        "editor.html",
+        title="New Lesson",
+        owned_courses=db_execute(
+            query="SELECT * FROM course WHERE owner = ?",
+            params=(g.get("user")["userid"],),
+            fetch_type=3,
+        ),
+        courseid=lesson["course"],  # pyright: ignore
+        lesson_title=lesson["title"],  # pyright: ignore
+        lesson_content=lesson["content"],  # pyright: ignore
+    )
 
 
 @lesson_bp.route("/", methods=["DELETE"])
