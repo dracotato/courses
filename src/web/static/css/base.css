@@ -72,3 +72,10 @@ small,
 .small {
   font-size: 0.8rem;
 }
+
+/* resets */
+button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
