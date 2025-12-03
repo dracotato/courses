@@ -78,4 +78,6 @@ button {
   background-color: transparent;
   outline: none;
   border: none;
+  /* needed for some reason for the button in .dropdown */
+  cursor: pointer;
 }

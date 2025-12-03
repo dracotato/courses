@@ -9,10 +9,20 @@
           <ul class="dropdown-content">
             <li>
               <a href="{{ url_for(".update", id=lesson_id, redirect=true) }}"
-                 class="btn">Edit</a>
+                 class="btn">
+                <span class="icon-text">
+                  <span class="material-symbols-outlined icon">edit</span>
+                  <span class="text">Edit</span>
+                </span>
+              </a>
             </li>
             <li>
-              <button onclick="deleteEnt('lesson',id=[{{ lesson_id }}], redirect=true)">Delete</button>
+              <button onclick="deleteEnt('lesson',id=[{{ lesson_id }}], redirect=true)">
+                <span class="icon-text">
+                  <span class="material-symbols-outlined icon">delete</span>
+                  <span class="text">Delete</span>
+                </span>
+              </button>
             </li>
           </ul>
         </div>

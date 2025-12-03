@@ -9,10 +9,20 @@
             <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
             <ul class="dropdown-content">
               <li>
-                <a href="{{ url_for(".update", id=course_id) }}" class="btn">Edit</a>
+                <a href="{{ url_for(".update", id=course_id) }}" class="btn">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">edit</span>
+                    <span class="text">Edit</span>
+                  </span>
+                </a>
               </li>
               <li>
-                <button class="btn" onclick="deleteEnt('course', id={{ course_id }}, true)">Delete</button>
+                <button class="btn" onclick="deleteEnt('course', id={{ course_id }}, true)">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">delete</span>
+                    <span class="text">Delete</span>
+                  </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -37,10 +47,20 @@
                     <ul class="dropdown-content">
                       <li>
                         <a href="{{ url_for("root.lesson.update", id=lesson["lessonid"]) }}"
-                           class="btn">Edit</a>
+                           class="btn">
+                          <span class="icon-text">
+                            <span class="material-symbols-outlined icon">edit</span>
+                            <span class="text">Edit</span>
+                          </span>
+                        </a>
                       </li>
                       <li>
-                        <button onclick="deleteEntity('lesson', id={{ lesson['lessonid'] }})">Delete</button>
+                        <button onclick="deleteEnt('lesson', id={{ lesson['lessonid'] }})">
+                          <span class="icon-text">
+                            <span class="material-symbols-outlined icon">delete</span>
+                            <span class="text">Delete</span>
+                          </span>
+                        </button>
                       </li>
                     </ul>
                   </div>

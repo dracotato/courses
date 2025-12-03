@@ -46,7 +46,7 @@ async function deleteEnt(entity, ids, redirect = false) {
   });
 
   if (!response.ok) {
-    console.log(`status code: ${response.status}`);
+    console.error(`status code: ${response.status}`);
   } else {
     if (redirect) {
       console.log("redirecting you...");
