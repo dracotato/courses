@@ -18,5 +18,11 @@
            autocomplete="current-password"
            required>
   </div>
-  <button type="submit" class="btn primary">Log In</button>
+  <div class="flex-container space-between">
+    <p>
+      Don't have an account account?
+      <a href="{{ url_for(".register") }}">Register</a>
+    </p>
+    <button type="submit" class="btn primary">Log In</button>
+  </div>
 {% endblock form %}
