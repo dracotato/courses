@@ -1,4 +1,14 @@
-from flask import Blueprint, abort, g, json, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    abort,
+    flash,
+    g,
+    json,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 
 from src.db import db_execute
 from src.utils import EntityEnum, delete_entity, is_entity_owner, join_web
@@ -17,6 +27,11 @@ course_bp.before_request(check_login)
 @course_bp.route("/", methods=["GET", "POST"])
 def create():
     if request.method == "POST":
+        form = request.form
+
+        if not form["title"] or not form["desc"]:
+            return abort(400)
+
         course_id = db_execute(
             query="INSERT INTO course (title, desc, owner) VALUES (?,?,?)",
             params=(
@@ -28,6 +43,7 @@ def create():
             return_rowid=True,
         )
 
+        flash("Course created.")
         return redirect(url_for(".view", id=course_id))
     else:
         return render_template("form.html", title="New Course")
@@ -75,6 +91,7 @@ def update(id: int):
             commit=True,
         )
 
+        flash("Course updated.")
         return redirect(url_for(".view", id=id))
     else:
         return render_template(

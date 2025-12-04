@@ -1,5 +1,15 @@
 from bleach import clean
-from flask import Blueprint, abort, g, json, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    abort,
+    flash,
+    g,
+    json,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask import current_app as ca
 from markdown import markdown
 
@@ -22,7 +32,6 @@ lesson_bp.before_request(check_login)
 def create():
     if request.method == "POST":
         form = request.form
-        print(form)
         if (
             db_execute(
                 query="SELECT * FROM course WHERE courseid = ? AND owner = ?",
@@ -43,6 +52,7 @@ def create():
                 commit=True,
                 return_rowid=True,
             )
+            flash("Lesson created.")
             if form["batch"] == "0":
                 return redirect(url_for(".view", id=lesson_id))
         else:
@@ -54,7 +64,7 @@ def create():
         fetch_type=3,
     )
     if not owned_courses:
-        # TODO: flash a message telling the user why they were redirected
+        flash("Please create a course first.")
         return redirect(url_for("root.course.create"))
     return render_template(
         "editor.html", title="New Lesson", owned_courses=owned_courses
@@ -102,12 +112,17 @@ def update(id: int):
 
     if request.method == "POST":
         form = request.form
+
+        if not form["title"] or not form["content"]:
+            return abort(400)
+
         db_execute(
             query="UPDATE lesson SET course = ?, title = ?, content = ? WHERE lessonid = ?",
             params=(form["course"], form["title"], form["content"], id),
             commit=True,
         )
 
+        flash("Lesson updated.")
         return redirect(url_for(".view", id=id))
 
     lesson = db_execute(

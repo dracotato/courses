@@ -2,6 +2,7 @@ a {
   color: var(--clr-primary-500);
   text-decoration: none;
 }
+
 /* Button Component */
 .btn {
   display: block;
@@ -114,6 +115,48 @@ dialog {
 
 dialog::backdrop {
   background-color: color-mix(in srgb, black 30%, transparent);
+}
+
+/* Message Component */
+.msg-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 80vw;
+  max-width: 500px;
+  max-height: 100vh;
+  padding-block: 24px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  overflow: visible hidden;
+  scrollbar-width: none;
+  z-index: 100;
+}
+
+.msg {
+  display: flex;
+  gap: 8px;
+  background-color: var(--clr-primary-050);
+  width: 100%;
+  padding: 8px 24px;
+  border: 1px solid var(--clr-gray-900);
+  border-radius: 4px;
+  transition:
+    transform 350ms ease-in-out,
+    opacity 300ms ease-in-out;
+  user-select: none;
+  cursor: pointer;
+}
+
+.msg.fade-out {
+  transform: translateX(80%);
+  opacity: 0;
+}
+
+.msg.error {
+  background-color: var(--clr-danger-050);
 }
 
 /* Lesson Render Components */

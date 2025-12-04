@@ -10,7 +10,7 @@
           rel="stylesheet">
     {# icons #}
     {# the icons query needs to be alphabetically ordered #}
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=add_box,close,code,delete,edit,format_bold,format_h1,format_h2,format_h3,format_h4,format_italic,format_list_bulleted,format_list_numbered,format_quote,help,home,link,login,logout,menu,more_horiz,person_add"
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=add_box,close,code,delete,edit,format_bold,format_h1,format_h2,format_h3,format_h4,format_italic,format_list_bulleted,format_list_numbered,format_quote,help,home,info,link,login,logout,menu,more_horiz,person_add,warning"
           rel="stylesheet" />
     {# css #}
     <link href="{{ url_for("static", filename="css/variables.css") }}"
@@ -29,6 +29,18 @@
     </title>
   </head>
   <body>
+    <ul class="msg-container">
+      {% for msg in get_flashed_messages(with_categories=True) %}
+        <li class="msg {{ msg[0] }}">
+          {% if msg[0] == "error" %}
+            <span class="material-symbols-outlined icon">warning</span>
+          {% else %}
+            <span class="material-symbols-outlined icon">info</span>
+          {% endif %}
+          {{ msg[1] }}
+        </li>
+      {% endfor %}
+    </ul>
     <header class="topbar">
       <span class="material-symbols-outlined icon menu-icon">menu</span>
       <span class="material-symbols-outlined icon close-icon">close</span>

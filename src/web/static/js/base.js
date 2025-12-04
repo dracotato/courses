@@ -1,9 +1,11 @@
 const sidebar = document.querySelector(".sidebar");
-const menuIcon = document.querySelector(".topbar .menu-icon");
-const closeIcon = document.querySelector(".topbar .close-icon");
 
-menuIcon.addEventListener("click", openSidebar);
-closeIcon.addEventListener("click", closeSidebar);
+document
+  .querySelector(".topbar .menu-icon")
+  .addEventListener("click", openSidebar);
+document
+  .querySelector(".topbar .close-icon")
+  .addEventListener("click", closeSidebar);
 
 function openSidebar() {
   sidebar.classList.add("open");
@@ -13,6 +15,7 @@ function closeSidebar() {
   sidebar.classList.remove("open");
 }
 
+/* toggle dropdown when clicking on dropdown-btn */
 document.querySelectorAll(".dropdown").forEach((entry) => {
   entry.querySelector(".dropdown-btn").addEventListener("click", (e) => {
     entry.classList.toggle("open");
@@ -54,3 +57,27 @@ async function deleteEnt(entity, ids, redirect = false) {
     }
   }
 }
+
+function rmMsg(msg) {
+  msg.classList.add("fade-out");
+  msg.addEventListener("transitionend", (_) => {
+    console.log("transition ended");
+    msg.remove();
+  });
+}
+
+document.querySelectorAll(".msg").forEach((msg, idx) => {
+  // delay before any message starts getting deleted
+  const baseDelay = 5000;
+  // delay between each message deletion
+  const stepDelay = 2000;
+  msg.addEventListener("click", () => {
+    rmMsg(msg);
+  });
+  setTimeout(
+    () => {
+      rmMsg(msg);
+    },
+    baseDelay + stepDelay * (idx + 1), // total delay
+  );
+});

@@ -3,6 +3,7 @@ from re import fullmatch
 
 from flask import (
     Blueprint,
+    flash,
     g,
     redirect,
     render_template,
@@ -45,11 +46,13 @@ def check_login():
     if not g.get("user"):
         # remember this page to come back after logging in
         session["prev_location"] = request.url
+        flash("Please log-in first.")
         return redirect(url_for("root.auth.login"))
 
 
 def check_logout():
     if g.get("user"):
+        flash("You're already logged-in.")
         return redirect(url_for("root.index"))
 
 
@@ -61,6 +64,7 @@ def logged_in(view):
         if g.get("user"):
             return view(*args, **kwargs)
         else:
+            flash("Please log-in first.")
             return redirect(url_for("root.auth.login"))
 
     return wrapper
@@ -74,6 +78,7 @@ def logged_out(view):
         if not g.get("user"):
             return view(*args, **kwargs)
         else:
+            flash("You're already logged-in.")
             return redirect(url_for("root.index"))
 
     return wrapper
@@ -88,28 +93,41 @@ def register():
 
         # validity checks
         if not all(formdata):  # prevents any optional fields
+            flash(
+                "Please fill all fields.",
+                category="error",
+            )
             valid = False
         if not fullmatch(r"[a-zA-Z0-9]+", formdata["username"]):
+            flash(
+                "Usernames can only contain letters and numbers and NO spaces.",
+                category="error",
+            )
             valid = False
         if not fullmatch(
             r"[a-zA-Z0-9-.]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+", formdata["email"]
         ):
+            flash("Please use a valid email.", category="error")
             valid = False
         if len(formdata["password"]) < 8:
+            flash("Password must be more than 8 characters.", category="error")
             valid = False
         if formdata["password"] != formdata["confirm-password"]:
+            flash("Passwords don't match. Please try again.", category="error")
             valid = False
         if db_execute(
             "SELECT * FROM user WHERE username = ?",
             params=(formdata["username"],),
             fetch_type=1,
         ):
+            flash("Username is already in use. Please log-in.", category="error")
             valid = False
         if db_execute(
             "SELECT * FROM user WHERE email = ?",
             params=(formdata["email"],),
             fetch_type=1,
         ):
+            flash("Email is already in use. Please log-in.", category="error")
             valid = False
 
         if valid:
@@ -122,6 +140,7 @@ def register():
                 ),
                 commit=True,
             )
+            flash("Your account was created. Please log-in.")
             return redirect(url_for(".login"))
 
     return render_template("register.html", title="Register")
@@ -140,9 +159,9 @@ def login():
         )
 
         if not result:
-            return "error in email or password."
+            flash("Error in email/username or password.", "error")
 
-        if check_password_hash(result["password"], formdata["password"]):  # pyright: ignore
+        elif check_password_hash(result["password"], formdata["password"]):  # pyright: ignore
             session["session_id"] = db_execute(
                 "INSERT INTO session(useragent,user) VALUES (?,?)",
                 params=(request.user_agent.string, result["userid"]),  # pyright: ignore
@@ -168,4 +187,5 @@ def logout():
         )
         session.pop("session_id", None)
 
+    flash("You've logged-out. Please log-in again.")
     return redirect(url_for(".login"))
