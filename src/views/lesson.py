@@ -66,11 +66,17 @@ def view(id: int):
     lesson = db_execute(
         query="SELECT * FROM lesson WHERE lessonid = ?", params=(id,), fetch_type=1
     )
+    course = db_execute(
+        query="SELECT * FROM course WHERE courseid = ?",
+        params=(lesson["course"],),  # pyright: ignore
+        fetch_type=1,
+    )
 
     if not lesson:
         abort(404)
 
-    content = clean(
+    # render markdown to html
+    rendered_content = clean(
         markdown(lesson["content"]),  # pyright: ignore
         tags=ca.config["RENDER_TAGS"],
         attributes=ca.config["RENDER_ATTRS"],
@@ -79,9 +85,9 @@ def view(id: int):
     return render_template(
         "render.html",
         title="View Lesson",
-        lesson_title=lesson["title"],  # pyright: ignore
-        content=content,
-        lesson_id=lesson["lessonid"],  # pyright: ignore
+        course=course,
+        lesson=lesson,
+        rendered_content=rendered_content,
         is_owner=is_entity_owner(EntityEnum.LESSON, lesson["lessonid"]),  # pyright: ignore
     )
 

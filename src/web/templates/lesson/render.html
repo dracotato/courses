@@ -1,34 +1,40 @@
 {% extends "base.html" %}
 {% block body %}
   <div class="container pad-top pad-btm">
-    <div class="flex-container space-between align-center lesson-title">
-      <h4>{{ lesson_title }}</h4>
-      {% if is_owner %}
-        <div class="dropdown">
-          <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
-          <ul class="dropdown-content">
-            <li>
-              <a href="{{ url_for(".update", id=lesson_id, redirect=true) }}"
-                 class="btn">
-                <span class="icon-text">
-                  <span class="material-symbols-outlined icon">edit</span>
-                  <span class="text">Edit</span>
-                </span>
-              </a>
-            </li>
-            <li>
-              <button onclick="deleteEnt('lesson',id=[{{ lesson_id }}], redirect=true)">
-                <span class="icon-text">
-                  <span class="material-symbols-outlined icon">delete</span>
-                  <span class="text">Delete</span>
-                </span>
-              </button>
-            </li>
-          </ul>
-        </div>
-      {% endif %}
+    <div class=" lesson-header">
+      <a href="{{ url_for("root.course.view", id=course["courseid"]) }}"
+         class="lesson-course">
+        <small>{{ course["title"] }}</small>
+      </a>
+      <div class="flex-container space-between align-center">
+        <h4>{{ lesson["title"] }}</h4>
+        {% if is_owner %}
+          <div class="dropdown">
+            <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
+            <ul class="dropdown-content">
+              <li>
+                <a href="{{ url_for(".update", id=lesson["lessonid"], redirect=true) }}"
+                   class="btn">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">edit</span>
+                    <span class="text">Edit</span>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <button onclick="deleteEnt('lesson',id=[{{ lesson['lessonid'] }}], redirect=true)">
+                  <span class="icon-text">
+                    <span class="material-symbols-outlined icon">delete</span>
+                    <span class="text">Delete</span>
+                  </span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        {% endif %}
+      </div>
     </div>
-    <div class="lesson-content">{{ content | safe }}</div>
+    <div class="lesson-content">{{ rendered_content | safe }}</div>
   </div>
   <script src="{{ url_for("static", filename="js/render.js") }}"></script>
 {% endblock body %}
