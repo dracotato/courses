@@ -37,7 +37,8 @@
     <div class="lessons-wrapper">
       {% if lessons %}
         {% for lesson in lessons %}
-          <section class="lesson-card flex-container space-between align-center">
+          <section class="lesson-card flex-container space-between align-center"
+                   data-lesson-id="{{ lesson["lessonid"] }}">
             <a href="{{ url_for("root.lesson.view", id=lesson["lessonid"]) }}">
               <h4>{{ lesson["title"] }}</h4>
             </a>

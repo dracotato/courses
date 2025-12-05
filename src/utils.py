@@ -42,9 +42,12 @@ def is_entity_owner(entity: EntityEnum, entity_id: int, return_entity=False):
 
 
 def delete_entity(entity: EntityEnum, entity_id: int):
+    """delete an entity if it's owned by the logged-in user and return an HTTP status code"""
     ownership = is_entity_owner(entity=entity, entity_id=entity_id)
+    # user is not logged-in. this should preferably never happen.
+    # and the auth module should've redirected the user before reaching this stage.
     if ownership is None:
-        return 404  # status code
+        return 401  # status code
     elif not ownership:
         return 403
 

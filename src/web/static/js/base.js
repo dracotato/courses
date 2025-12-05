@@ -40,6 +40,12 @@ document.addEventListener("click", (e) => {
 async function deleteEnt(entity, ids, redirect = false) {
   const url = `/${entity}/`;
 
+  const many = ids instanceof Array;
+  const length = many ? ids.length : 1;
+  if (!confirm(`Are you sure you want to delete ${length} ${entity}?`)) {
+    return;
+  }
+
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
@@ -50,18 +56,26 @@ async function deleteEnt(entity, ids, redirect = false) {
 
   if (!response.ok) {
     console.error(`status code: ${response.status}`);
-  } else {
-    if (redirect) {
-      console.log("redirecting you...");
-      location.replace("/");
-    }
+    return;
+  }
+
+  if (redirect) {
+    location.replace("/");
+    return;
+  }
+
+  if (many) {
+    ids.forEach((id) => {
+      document.querySelector(`[data-${entity}-id="${id}"]`).remove();
+    });
+  } else if (typeof ids == "number") {
+    document.querySelector(`[data-${entity}-id="${ids}"]`).remove();
   }
 }
 
 function rmMsg(msg) {
   msg.classList.add("fade-out");
   msg.addEventListener("transitionend", (_) => {
-    console.log("transition ended");
     msg.remove();
   });
 }
