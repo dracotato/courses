@@ -30,8 +30,8 @@ lesson_bp.before_request(check_login)
 
 @lesson_bp.route("/", methods=["GET", "POST"])
 def create():
+    form = request.form
     if request.method == "POST":
-        form = request.form
         if (
             db_execute(
                 query="SELECT * FROM course WHERE courseid = ? AND owner = ?",
@@ -41,7 +41,7 @@ def create():
             and form["title"]
             and form["content"]
         ):
-            lesson_id = db_execute(
+            db_execute(
                 query="INSERT INTO lesson (title, content, owner, course) VALUES (?,?,?,?)",
                 params=(
                     form["title"],
@@ -54,7 +54,7 @@ def create():
             )
             flash("Lesson created.")
             if form["batch"] == "0":
-                return redirect(url_for(".view", id=lesson_id))
+                return redirect(url_for("root.course.view", id=form["course"]))
         else:
             return abort(400)
 
@@ -67,7 +67,11 @@ def create():
         flash("Please create a course first.")
         return redirect(url_for("root.course.create"))
     return render_template(
-        "editor.html", title="New Lesson", owned_courses=owned_courses
+        "editor.html",
+        title="New Lesson",
+        owned_courses=owned_courses,
+        # set course to same course from last request for batch writes
+        courseid=form.get("course"),
     )
 
 
