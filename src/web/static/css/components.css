@@ -8,24 +8,15 @@ a {
   display: block;
   background-color: var(--clr-gray-050);
   color: inherit;
+  width: fit-content;
+  height: fit-content;
   padding: 8px 12px;
   border: 2px solid var(--clr-gray-900);
   border-radius: 8px;
+  text-wrap: nowrap;
   text-align: center;
   cursor: pointer;
   text-decoration: none;
-}
-
-@media (max-width: 449px) {
-  .btn {
-    width: 100%;
-  }
-}
-
-@media (min-width: 450px) {
-  .btn {
-    width: fit-content;
-  }
 }
 
 /* Button Variant */
