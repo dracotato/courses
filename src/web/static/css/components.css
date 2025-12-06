@@ -351,6 +351,7 @@ iframe.yt {
 }
 
 .icon {
+  height: fit-content;
   user-select: none;
   position: relative;
   cursor: pointer;
