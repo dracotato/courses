@@ -144,7 +144,6 @@ dialog::backdrop {
   width: 80vw;
   max-width: 500px;
   max-height: 100vh;
-  padding-block: 24px;
   position: absolute;
   top: 0;
   left: 50%;
@@ -152,6 +151,14 @@ dialog::backdrop {
   overflow: visible hidden;
   scrollbar-width: none;
   z-index: 100;
+}
+
+.msg-container .msg:first-child {
+  margin-top: 24px;
+}
+
+.msg-container .msg:last-child {
+  margin-bottom: 24px;
 }
 
 .msg {
