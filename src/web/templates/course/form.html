@@ -12,12 +12,11 @@
     </div>
     <div class="input-container">
       <label for="desc">Description</label>
-      <input type="text"
-             name="desc"
-             id="desc"
-             placeholder="This course covers x, y, and z"
-             value="{{ course_desc }}"
-             required>
+      <textarea type="text"
+                name="desc"
+                id="desc"
+                placeholder="This course covers x, y, and z"
+                required>{{ course_desc }}</textarea>
     </div>
     <button type="submit" class="btn primary">Save</button>
   </form>

@@ -94,8 +94,10 @@ form > button[type="submit"] {
   gap: 12px;
 }
 
-.input-container input {
+.input-container input,
+.input-container textarea {
   --invalid-clr: var(--clr-danger-900);
+  --focus-clr: var(--clr-primary-500);
 
   background-color: var(--clr-gray-050);
   border-radius: 4px;
@@ -103,13 +105,25 @@ form > button[type="submit"] {
   padding: 8px 12px;
 }
 
-.input-container input:user-invalid {
+.input-container input:focus-visible,
+.input-container textarea:focus-visible {
+  outline: none;
+  border-color: var(--focus-clr);
+}
+
+.input-container input:user-invalid,
+.input-container textarea:user-invalid {
   color: var(--invalid-clr);
   border-color: var(--invalid-clr);
 }
 
-.input-container input:user-invalid::placeholder {
+.input-container input:user-invalid::placeholder,
+.input-container textarea:user-invalid::placeholder {
   color: var(--invalid-clr);
+}
+
+.input-container textarea {
+  resize: vertical;
 }
 
 /* Dialog Component */
