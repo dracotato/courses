@@ -95,7 +95,21 @@ form > button[type="submit"] {
 }
 
 .input-container input {
+  --invalid-clr: var(--clr-danger-900);
+
+  background-color: var(--clr-gray-050);
+  border-radius: 4px;
+  border: 2px solid var(--clr-gray-900);
   padding: 8px 12px;
+}
+
+.input-container input:user-invalid {
+  color: var(--invalid-clr);
+  border-color: var(--invalid-clr);
+}
+
+.input-container input:user-invalid::placeholder {
+  color: var(--invalid-clr);
 }
 
 /* Dialog Component */
