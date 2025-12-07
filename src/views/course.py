@@ -65,7 +65,11 @@ def view(id: int):
         course_desc=course["desc"],  # pyright: ignore
         course_id=id,  # pyright: ignore
         is_owner=is_entity_owner(EntityEnum.COURSE, id),  # pyright: ignore
-        owner_username=g.get("user")["username"],
+        owner_username=db_execute(
+            query="SELECT * FROM user WHERE userid = ?",
+            params=(course["owner"],),  # pyright: ignore
+            fetch_type=1,
+        )["username"],  # pyright: ignore
         lessons=db_execute(
             query="SELECT * FROM lesson WHERE course = ?", params=(id,), fetch_type=3
         ),
