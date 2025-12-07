@@ -1,9 +1,63 @@
 {% extends "base.html" %}
 {% block body %}
-  <div class="container center-text pad-top gap">
-    <h1 class="margin-btm">
-      Welcome to <span class="clr-primary">Courses.</span>
-    </h1>
-    <p>A place for sharing (and gaining) knowledge.</p>
+  <div class="container pad-top">
+    {% if g.user %}
+      {# Logged-in users #}
+      <h4 class="heading-margin">Your Courses</h4>
+      {% if courses %}
+        <div class="flex-container col gap">
+          {% for course in courses %}
+            <section class="card" data-course-id="{{ course["courseid"] }}">
+              <div class="flex-container col gap">
+                <div class="flex-container space-between gap">
+                  <a href="{{ url_for("root.course.view", id=course["courseid"]) }}"
+                     class="bold">{{ course["title"] }}</a>
+                  <div class="dropdown">
+                    <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
+                    <ul class="dropdown-content">
+                      <li>
+                        <a href="{{ url_for("root.course.update", id=course["courseid"]) }}"
+                           class="btn">
+                          <span class="icon-text">
+                            <span class="material-symbols-outlined icon">edit</span>
+                            <span class="text">Edit</span>
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <button class="btn"
+                                onclick="deleteEnt('course', id={{ course['courseid'] }})">
+                          <span class="icon-text">
+                            <span class="material-symbols-outlined icon">delete</span>
+                            <span class="text">Delete</span>
+                          </span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <p>{{ course["desc"] }}</p>
+              </div>
+              <p class="attr">
+                {{ course["lessoncount"] }}
+                {% if course["lessoncount"] != 1 %}
+                  Lessons
+                {% else %}
+                  Lesson
+                {% endif %}
+              </p>
+            </section>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>It seems you don't have any courses yet.</p>
+      {% endif %}
+    {% else %}
+      {# Logged-out users #}
+      <h1 class="heading-margin center-text">
+        Welcome to <span class="clr-primary">Courses.</span>
+      </h1>
+      <p class="center-text">A place for sharing (and gaining) knowledge.</p>
+    {% endif %}
   </div>
 {% endblock body %}

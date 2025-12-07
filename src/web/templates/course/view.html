@@ -1,71 +1,74 @@
 {% extends "base.html" %}
 {% block body %}
-  <header class="course-header">
-    <div class="container pad-top pad-btm course-header-content">
-      <div class="flex-container space-between align-center course-title">
-        <h2>{{ course_title }}</h2>
-        {% if is_owner %}
-          <div class="dropdown">
-            <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
-            <ul class="dropdown-content">
-              <li>
-                <a href="{{ url_for(".update", id=course_id) }}" class="btn">
-                  <span class="icon-text">
-                    <span class="material-symbols-outlined icon">edit</span>
-                    <span class="text">Edit</span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <button class="btn" onclick="deleteEnt('course', id={{ course_id }}, true)">
-                  <span class="icon-text">
-                    <span class="material-symbols-outlined icon">delete</span>
-                    <span class="text">Delete</span>
-                  </span>
-                </button>
-              </li>
-            </ul>
-          </div>
-        {% endif %}
+  <header class="course-header-container">
+    <div class="container pad-top pad-btm course-header">
+      <div>
+        <div class="flex-container space-between align-center course-title">
+          <h2>{{ course_title }}</h2>
+          {% if is_owner %}
+            <div class="dropdown">
+              <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
+              <ul class="dropdown-content">
+                <li>
+                  <a href="{{ url_for(".update", id=course_id) }}" class="btn">
+                    <span class="icon-text">
+                      <span class="material-symbols-outlined icon">edit</span>
+                      <span class="text">Edit</span>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <button class="btn" onclick="deleteEnt('course', id={{ course_id }}, true)">
+                    <span class="icon-text">
+                      <span class="material-symbols-outlined icon">delete</span>
+                      <span class="text">Delete</span>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+        <p>{{ course_desc }}</p>
       </div>
-      <p>{{ course_desc }}</p>
       <small>By: {{ owner_username }}</small>
     </div>
   </header>
   <div class="container pad-btm lessons-container">
-    <h3>Lessons</h3>
+    <h3 class="heading-margin">Lessons</h3>
     <div class="lessons-wrapper">
       {% if lessons %}
         {% for lesson in lessons %}
-          <section class="lesson-card flex-container space-between align-center"
-                   data-lesson-id="{{ lesson["lessonid"] }}">
-            <a href="{{ url_for("root.lesson.view", id=lesson["lessonid"]) }}">
-              <h4>{{ lesson["title"] }}</h4>
-            </a>
-            {% if is_owner %}
-              <div class="dropdown">
-                <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
-                <ul class="dropdown-content">
-                  <li>
-                    <a href="{{ url_for("root.lesson.update", id=lesson["lessonid"]) }}"
-                       class="btn">
-                      <span class="icon-text">
-                        <span class="material-symbols-outlined icon">edit</span>
-                        <span class="text">Edit</span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <button onclick="deleteEnt('lesson', id={{ lesson['lessonid'] }})">
-                      <span class="icon-text">
-                        <span class="material-symbols-outlined icon">delete</span>
-                        <span class="text">Delete</span>
-                      </span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            {% endif %}
+          <section class="card" data-lesson-id="{{ lesson["lessonid"] }}">
+            <div class=" flex-container space-between align-center">
+              <a href="{{ url_for("root.lesson.view", id=lesson["lessonid"]) }}">
+                <h4>{{ lesson["title"] }}</h4>
+              </a>
+              {% if is_owner %}
+                <div class="dropdown">
+                  <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
+                  <ul class="dropdown-content">
+                    <li>
+                      <a href="{{ url_for("root.lesson.update", id=lesson["lessonid"]) }}"
+                         class="btn">
+                        <span class="icon-text">
+                          <span class="material-symbols-outlined icon">edit</span>
+                          <span class="text">Edit</span>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <button onclick="deleteEnt('lesson', id={{ lesson['lessonid'] }})">
+                        <span class="icon-text">
+                          <span class="material-symbols-outlined icon">delete</span>
+                          <span class="text">Delete</span>
+                        </span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              {% endif %}
+            </div>
           </section>
         {% endfor %}
       {% else %}

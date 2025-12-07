@@ -149,13 +149,21 @@ body:not(:has(.sidebar.open)) .topbar .close-icon {
   align-items: center;
 }
 
+.flex-container.col {
+  flex-direction: column;
+}
+
+.flex-container.gap {
+  gap: 12px;
+}
+
 /* Utilities */
 .center-text {
   text-align: center;
 }
 
-.margin-btm {
-  margin-bottom: 12px;
+.heading-margin {
+  margin-bottom: 32px;
 }
 
 /* Colors */

@@ -69,7 +69,8 @@ button,
 }
 
 small,
-.small {
+.small,
+.attr {
   font-size: 0.8rem;
 }
 
