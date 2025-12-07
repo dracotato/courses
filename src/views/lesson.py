@@ -44,8 +44,8 @@ def create():
             db_execute(
                 query="INSERT INTO lesson (title, content, owner, course) VALUES (?,?,?,?)",
                 params=(
-                    form["title"],
-                    form["content"],
+                    form["title"].strip(),
+                    form["content"].strip(),
                     g.get("user")["userid"],
                     form["course"],
                 ),

@@ -134,8 +134,8 @@ def register():
             db_execute(
                 "INSERT INTO user(username,email,password) VALUES (?,?,?)",
                 params=(
-                    formdata["username"],
-                    formdata["email"],
+                    formdata["username"].strip(),
+                    formdata["email"].strip(),
                     generate_password_hash(formdata["password"]),
                 ),
                 commit=True,

@@ -35,8 +35,8 @@ def create():
         course_id = db_execute(
             query="INSERT INTO course (title, desc, owner) VALUES (?,?,?)",
             params=(
-                request.form["title"],
-                request.form["desc"],
+                request.form["title"].strip(),
+                request.form["desc"].strip(),
                 g.get("user")["userid"],
             ),
             commit=True,
