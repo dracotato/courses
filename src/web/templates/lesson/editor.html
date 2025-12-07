@@ -7,7 +7,7 @@
           <option value="-1" {% if not courseid %}selected{% endif %} disabled>--select course--</option>
           {% for course in owned_courses %}
             <option value="{{ course["courseid"] }}"
-                    {% if courseid == course["courseid"] %}selected{% endif %}>{{ course["title"] }}</option>
+                    {% if courseid|int == course["courseid"] %}selected{% endif %}>{{ course["title"] }}</option>
           {% endfor %}
         </select>
         <span class="bold">/</span>
