@@ -1,140 +1,5 @@
-a {
-  color: var(--clr-primary-500);
-  text-decoration: none;
-}
-
-/* Button Component */
-.btn {
-  display: block;
-  background-color: var(--clr-gray-050);
-  color: inherit;
-  width: fit-content;
-  height: fit-content;
-  padding: 8px 12px;
-  border: 2px solid var(--clr-gray-900);
-  border-radius: 8px;
-  text-wrap: nowrap;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-/* Button Variant */
-.btn.primary {
-  background-color: var(--clr-primary-050);
-}
-
-/* kbd Component */
-kbd {
-  min-width: 40px; /* Ensure all 1 chars are the same width */
-  margin-bottom: 4px;
-  padding: 6px 12px;
-  border: 2px solid var(--clr-gray-900);
-  border-bottom-width: 4px;
-  border-radius: 8px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-/* Code Component */
-code {
-  background-color: var(--clr-gray-200);
-  border: 1px solid var(--clr-gray-500);
-  padding: 4px;
-  border-radius: 4px;
-}
-
-/* Blockquote Component */
-blockquote {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  background-color: var(--clr-gray-200);
-  padding: 15px;
-  border-radius: 4px;
-}
-
-blockquote p:first-of-type {
-  margin-inline-start: 16px;
-}
-
-blockquote p:first-of-type::before {
-  content: "“";
-}
-
-blockquote p:first-of-type::after {
-  content: "”";
-}
-
-/* Form & Inputs */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* avoid styling nested submit button, it's handled by their container */
-form > button[type="submit"] {
-  margin-top: 32px;
-  align-self: flex-end;
-}
-
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.input-container input,
-.input-container textarea {
-  --invalid-clr: var(--clr-danger-900);
-  --focus-clr: var(--clr-primary-500);
-
-  background-color: var(--clr-gray-050);
-  border-radius: 4px;
-  border: 2px solid var(--clr-gray-900);
-  padding: 8px 12px;
-}
-
-.input-container input:focus-visible,
-.input-container textarea:focus-visible {
-  outline: none;
-  border-color: var(--focus-clr);
-}
-
-.input-container input:user-invalid,
-.input-container textarea:user-invalid {
-  color: var(--invalid-clr);
-  border-color: var(--invalid-clr);
-}
-
-.input-container input:user-invalid::placeholder,
-.input-container textarea:user-invalid::placeholder {
-  color: var(--invalid-clr);
-}
-
-.input-container textarea {
-  resize: vertical;
-}
-
-/* Dialog Component */
-dialog {
-  background-color: var(--clr-gray-100);
-  width: 80vw;
-  max-width: min(var(--size-max-width), 80vw);
-  padding: 32px;
-  border: 1px solid var(--clr-gray-900);
-  border-radius: 12px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  outline: none;
-}
-
-dialog::backdrop {
-  background-color: color-mix(in srgb, black 30%, transparent);
-}
+/* Global Components */
+/* ----------------- */
 
 /* Message Component */
 .msg-container {
@@ -185,28 +50,179 @@ dialog::backdrop {
   background-color: var(--clr-danger-050);
 }
 
-/* Lesson Render Components */
-.lesson-header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--clr-gray-200);
-  margin-bottom: 48px;
-}
-
-.lesson-course {
-  color: var(--clr-primary-500);
+/* Button Component */
+.btn {
+  display: block;
+  background-color: var(--clr-gray-050);
+  color: inherit;
+  width: fit-content;
+  height: fit-content;
+  padding: 8px 12px;
+  border: 2px solid var(--clr-gray-900);
+  border-radius: 8px;
+  text-wrap: nowrap;
+  text-align: center;
+  cursor: pointer;
   text-decoration: none;
 }
 
-.lesson-content {
+/* Button Variant */
+.btn.primary {
+  background-color: var(--clr-primary-050);
+}
+
+/* Form & Inputs */
+form {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
+}
+
+/* avoid styling nested submit button, it's handled by their container */
+form > button[type="submit"] {
+  margin-top: 32px;
+  align-self: flex-end;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-container input,
+.input-container textarea {
+  --invalid-clr: var(--clr-danger-900);
+  --focus-clr: var(--clr-primary-500);
+
+  background-color: var(--clr-gray-050);
+  border-radius: 4px;
+  border: 2px solid var(--clr-gray-900);
+  padding: 8px 12px;
+}
+
+.input-container input:focus-visible,
+.input-container textarea:focus-visible {
+  outline: none;
+  border-color: var(--focus-clr);
+}
+
+.input-container input:user-invalid,
+.input-container textarea:user-invalid {
+  color: var(--invalid-clr);
+  border-color: var(--invalid-clr);
+}
+
+.input-container input:user-invalid::placeholder,
+.input-container textarea:user-invalid::placeholder {
+  color: var(--invalid-clr);
+}
+
+.input-container textarea {
+  min-height: 50px; /* avoid shrinking too much */
+  resize: vertical;
+}
+
+/* Dialog Component */
+dialog {
+  background-color: var(--clr-gray-100);
+  width: 80vw;
+  max-width: min(var(--size-max-width), 80vw);
+  padding: 32px;
+  border: 1px solid var(--clr-gray-900);
+  border-radius: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  outline: none;
+}
+
+dialog::backdrop {
+  background-color: color-mix(in srgb, black 30%, transparent);
+}
+
+/* Dropdown Menu Component */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--clr-gray-050);
+  padding: 16px 24px;
+  border: 2px solid var(--clr-gray-900);
+  border-radius: 8px;
+  list-style-type: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 2;
+}
+
+.dropdown-content li:not(:last-child) {
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--clr-gray-300);
+}
+
+.dropdown-content button,
+.dropdown-content .btn {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+.dropdown.open .dropdown-content {
+  display: flex;
+}
+
+.dropdown-content li > * {
+  width: 100%;
+}
+
+/* Icon-Text Compound Component */
+.icon-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  height: fit-content;
+  user-select: none;
+  position: relative;
+  cursor: pointer;
+  z-index: 1;
+  transition: color 100ms ease-out;
+}
+
+/* Card Component */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: var(--clr-gray-050);
+  padding: 16px 24px;
+  border: 2px solid var(--clr-gray-900);
+  border-radius: 4px;
+}
+
+.card a {
+  color: inherit;
+}
+
+.attr {
+  background-color: var(--clr-primary-050);
+  width: fit-content;
+  padding: 4px 8px;
+  border: 1px solid var(--clr-primary-100);
+  border-radius: 4px;
 }
 
 /* Lesson Editor Components */
+/* ------------------------ */
 .keybinds-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -221,13 +237,22 @@ dialog::backdrop {
   height: fit-content;
 }
 
-.keybind kbd {
-  background-color: var(--clr-gray-050);
-}
-
 .keybind .keys {
   display: flex;
   gap: 6px;
+}
+
+/* kbd Component */
+.keybind kbd {
+  background-color: var(--clr-gray-050);
+  min-width: 40px; /* Ensure all 1 chars are the same width */
+  margin-bottom: 4px;
+  padding: 6px 12px;
+  border: 2px solid var(--clr-gray-900);
+  border-bottom-width: 4px;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .editor-form {
@@ -332,6 +357,58 @@ dialog::backdrop {
   justify-content: flex-end;
 }
 
+/* Lesson Render Components */
+/* ------------------------ */
+.lesson-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--clr-gray-200);
+  margin-bottom: 48px;
+}
+
+.lesson-course {
+  color: var(--clr-primary-500);
+  text-decoration: none;
+}
+
+.lesson-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Code Component */
+code {
+  background-color: var(--clr-gray-200);
+  border: 1px solid var(--clr-gray-500);
+  padding: 4px;
+  border-radius: 4px;
+}
+
+/* Blockquote Component */
+blockquote {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  background-color: var(--clr-gray-200);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+blockquote p:first-of-type {
+  margin-inline-start: 16px;
+}
+
+blockquote p:first-of-type::before {
+  content: "“";
+}
+
+blockquote p:first-of-type::after {
+  content: "”";
+}
+
 /* YT Iframe Component */
 iframe.yt {
   width: 100%;
@@ -341,86 +418,8 @@ iframe.yt {
   border-radius: 4px;
 }
 
-/* Icon-Text Compound Component */
-.icon-text {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.icon {
-  height: fit-content;
-  user-select: none;
-  position: relative;
-  cursor: pointer;
-  z-index: 1;
-  transition: color 100ms ease-out;
-}
-
-/* Dropdown Menu Component */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-content {
-  display: none;
-  flex-direction: column;
-  gap: 8px;
-  background-color: var(--clr-gray-050);
-  padding: 16px 24px;
-  border: 2px solid var(--clr-gray-900);
-  border-radius: 8px;
-  list-style-type: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 2;
-}
-
-.dropdown-content li:not(:last-child) {
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--clr-gray-300);
-}
-
-.dropdown-content button,
-.dropdown-content .btn {
-  background-color: transparent;
-  padding: 0;
-  border: none;
-}
-
-.dropdown.open .dropdown-content {
-  display: flex;
-}
-
-.dropdown-content li > * {
-  width: 100%;
-}
-
-/* Card Component */
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  background-color: var(--clr-gray-050);
-  padding: 16px 24px;
-  border: 2px solid var(--clr-gray-900);
-  border-radius: 4px;
-}
-
-.card a {
-  color: inherit;
-}
-
-.attr {
-  background-color: var(--clr-primary-050);
-  width: fit-content;
-  padding: 4px 8px;
-  border: 1px solid var(--clr-primary-100);
-  border-radius: 4px;
-}
-
-/* Course Viewer */
+/* Course Viewer Components */
+/* ------------------------ */
 .course-header-container {
   background-color: var(--clr-primary-050);
   margin-bottom: 62px;

@@ -82,3 +82,8 @@ button {
   /* needed for some reason for the button in .dropdown */
   cursor: pointer;
 }
+
+a {
+  color: var(--clr-primary-500);
+  text-decoration: none;
+}
