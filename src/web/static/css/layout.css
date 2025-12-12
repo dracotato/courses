@@ -13,9 +13,9 @@ body {
 .topbar {
   display: flex;
   gap: 24px;
-  background-color: var(--clr-gray-050);
+  background-color: var(--clr-bg-lt);
   padding: 16px var(--space-sidebar-pad);
-  border-bottom: 1px solid var(--clr-gray-200);
+  border-bottom: 1px solid var(--clr-bg-drk);
   align-items: center; /* ensure the icon and text are centered vertically */
 }
 
@@ -52,11 +52,11 @@ body:not(:has(.sidebar.open)) .topbar .close-icon {
   flex-direction: column;
   justify-content: space-between;
   gap: 10%;
-  background-color: var(--clr-gray-050);
+  background-color: var(--clr-bg-lt);
   max-width: 100%;
   height: 100%;
   padding: var(--space-sidebar-pad);
-  border-right: 1px solid var(--clr-gray-200);
+  border-right: 1px solid var(--clr-bg-drk);
   position: absolute;
   left: 0;
   transform: translateX(-100%);
@@ -79,7 +79,7 @@ body:not(:has(.sidebar.open)) .topbar .close-icon {
 }
 
 .sidebar hr {
-  color: var(--clr-gray-200);
+  color: var(--clr-bg-drk);
 }
 
 .sidebar a {
@@ -91,7 +91,7 @@ body:not(:has(.sidebar.open)) .topbar .close-icon {
 }
 
 .sidebar a:hover {
-  background-color: var(--clr-gray-200);
+  background-color: var(--clr-bg-drk);
 }
 
 .sidebar .profile {
@@ -123,14 +123,10 @@ body:not(:has(.sidebar.open)) .topbar .close-icon {
   padding-inline: var(--space-screen-hgap);
 }
 
-/* used to keep some distance from the topbar */
-.container.pad-top {
-  padding-top: var(--space-screen-vgap);
-}
-
-/* stay away from screen edges */
-.container.pad-btm {
+/* used to keep some distance from the topbar & screen edges */
+.container.pad-vertical {
   padding-bottom: var(--space-screen-vgap);
+  padding-top: var(--space-screen-vgap);
 }
 
 .container.screen-height {
@@ -168,5 +164,5 @@ body:not(:has(.sidebar.open)) .topbar .close-icon {
 
 /* Colors */
 .clr-primary {
-  color: var(--clr-primary-500);
+  color: var(--clr-primary);
 }

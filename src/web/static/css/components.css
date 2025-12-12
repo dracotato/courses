@@ -29,10 +29,10 @@
 .msg {
   display: flex;
   gap: 8px;
-  background-color: var(--clr-primary-050);
+  background-color: var(--clr-primary-ltr);
   width: 100%;
   padding: 8px 24px;
-  border: 1px solid var(--clr-gray-900);
+  border: 1px solid var(--clr-text);
   border-radius: 4px;
   transition:
     transform 350ms ease-in-out,
@@ -47,18 +47,18 @@
 }
 
 .msg.error {
-  background-color: var(--clr-danger-050);
+  background-color: var(--clr-danger-lt);
 }
 
 /* Button Component */
 .btn {
   display: block;
-  background-color: var(--clr-gray-050);
+  background-color: var(--clr-bg-lt);
   color: inherit;
   width: fit-content;
   height: fit-content;
   padding: 8px 12px;
-  border: 2px solid var(--clr-gray-900);
+  border: 2px solid var(--clr-text);
   border-radius: 8px;
   text-wrap: nowrap;
   text-align: center;
@@ -68,7 +68,7 @@
 
 /* Button Variant */
 .btn.primary {
-  background-color: var(--clr-primary-050);
+  background-color: var(--clr-primary-ltr);
 }
 
 /* Form & Inputs */
@@ -92,12 +92,12 @@ form > button[type="submit"] {
 
 .input-container input,
 .input-container textarea {
-  --invalid-clr: var(--clr-danger-900);
-  --focus-clr: var(--clr-primary-500);
+  --invalid-clr: var(--clr-danger-drkr);
+  --focus-clr: var(--clr-primary);
 
-  background-color: var(--clr-gray-050);
+  background-color: var(--clr-bg-lt);
   border-radius: 4px;
-  border: 2px solid var(--clr-gray-900);
+  border: 2px solid var(--clr-text);
   padding: 8px 12px;
 }
 
@@ -125,11 +125,11 @@ form > button[type="submit"] {
 
 /* Dialog Component */
 dialog {
-  background-color: var(--clr-gray-100);
+  background-color: var(--clr-bg);
   width: 80vw;
   max-width: min(var(--size-max-width), 80vw);
   padding: 32px;
-  border: 1px solid var(--clr-gray-900);
+  border: 1px solid var(--clr-text);
   border-radius: 12px;
   position: absolute;
   top: 50%;
@@ -151,9 +151,9 @@ dialog::backdrop {
   display: none;
   flex-direction: column;
   gap: 8px;
-  background-color: var(--clr-gray-050);
+  background-color: var(--clr-bg-lt);
   padding: 16px 24px;
-  border: 2px solid var(--clr-gray-900);
+  border: 2px solid var(--clr-text);
   border-radius: 8px;
   list-style-type: none;
   position: absolute;
@@ -164,7 +164,7 @@ dialog::backdrop {
 
 .dropdown-content li:not(:last-child) {
   padding-bottom: 8px;
-  border-bottom: 2px solid var(--clr-gray-300);
+  border-bottom: 2px solid var(--clr-bg-drk);
 }
 
 .dropdown-content button,
@@ -203,21 +203,23 @@ dialog::backdrop {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background-color: var(--clr-gray-050);
+  background-color: var(--clr-bg-lt);
   padding: 16px 24px;
-  border: 2px solid var(--clr-gray-900);
+  border: 2px solid var(--clr-text);
   border-radius: 4px;
 }
 
 .card a {
+  text-decoration: none;
   color: inherit;
 }
 
 .attr {
-  background-color: var(--clr-primary-050);
+  background-color: var(--clr-primary-ltr);
+  font-size: var(--font-size-small);
   width: fit-content;
   padding: 4px 8px;
-  border: 1px solid var(--clr-primary-100);
+  border: 1px solid var(--clr-primary-lt);
   border-radius: 4px;
 }
 
@@ -244,11 +246,11 @@ dialog::backdrop {
 
 /* kbd Component */
 .keybind kbd {
-  background-color: var(--clr-gray-050);
+  background-color: var(--clr-bg-lt);
   min-width: 40px; /* Ensure all 1 chars are the same width */
   margin-bottom: 4px;
   padding: 6px 12px;
-  border: 2px solid var(--clr-gray-900);
+  border: 2px solid var(--clr-text);
   border-bottom-width: 4px;
   border-radius: 8px;
   text-align: center;
@@ -264,8 +266,8 @@ dialog::backdrop {
 
 .editor-form__title,
 .editor-form__content {
-  background-color: var(--clr-gray-050);
-  border: 2px solid var(--clr-gray-900);
+  background-color: var(--clr-bg-lt);
+  border: 2px solid var(--clr-text);
   border-radius: 8px;
 }
 
@@ -318,7 +320,7 @@ dialog::backdrop {
   padding: 4px;
   gap: 16px;
   width: 100%;
-  border-bottom: 2px solid var(--clr-gray-900);
+  border-bottom: 2px solid var(--clr-text);
 }
 
 .editor-form__formats {
@@ -331,6 +333,8 @@ dialog::backdrop {
 }
 
 .editor-form__formatbar button {
+  background-color: transparent;
+  border: none;
   width: fit-content;
   border-radius: 4px;
   padding: 4px 8px;
@@ -338,7 +342,7 @@ dialog::backdrop {
 
 .editor-form__formatbar button:hover,
 .editor-form__formatbar button:focus-visible {
-  background-color: var(--clr-primary-050);
+  background-color: var(--clr-primary-ltr);
 }
 
 .editor-form__editor {
@@ -364,12 +368,12 @@ dialog::backdrop {
   flex-direction: column;
   gap: 8px;
   padding-bottom: 12px;
-  border-bottom: 2px solid var(--clr-gray-200);
+  border-bottom: 2px solid var(--clr-bg-drk);
   margin-bottom: 48px;
 }
 
 .lesson-course {
-  color: var(--clr-primary-500);
+  color: var(--clr-primary);
   text-decoration: none;
 }
 
@@ -381,8 +385,9 @@ dialog::backdrop {
 
 /* Code Component */
 code {
-  background-color: var(--clr-gray-200);
-  border: 1px solid var(--clr-gray-500);
+  background-color: var(--clr-bg-drk);
+  font-size: var(--font-size-small);
+  border: 1px solid var(--clr-text);
   padding: 4px;
   border-radius: 4px;
 }
@@ -392,8 +397,8 @@ blockquote {
   display: flex;
   flex-direction: column;
   gap: 28px;
-  background-color: var(--clr-gray-200);
-  padding: 15px;
+  background-color: var(--clr-bg-drk);
+  padding: 16px;
   border-radius: 4px;
 }
 
@@ -421,7 +426,7 @@ iframe.yt {
 /* Course Viewer Components */
 /* ------------------------ */
 .course-header-container {
-  background-color: var(--clr-primary-050);
+  background-color: var(--clr-primary-ltr);
   margin-bottom: 62px;
 }
 
