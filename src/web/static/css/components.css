@@ -372,7 +372,7 @@ dialog::backdrop {
   margin-bottom: 48px;
 }
 
-.lesson-course {
+.lesson-header__course {
   color: var(--clr-primary);
   text-decoration: none;
 }
@@ -380,11 +380,39 @@ dialog::backdrop {
 .lesson-content {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--space-rendered-gap);
+}
+
+/* heading margin, before and after other elements */
+.lesson-content > *:first-child {
+  margin-top: 0;
+}
+
+.lesson-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.lesson-content h1,
+.lesson-content h2,
+.lesson-content h3,
+.lesson-content h4,
+.lesson-content h5,
+.lesson-content h6 {
+  margin-block: max(
+    0,
+    calc(var(--space-heading-margin) - var(--space-rendered-gap))
+  );
+}
+
+.lesson-content p + p {
+  margin-top: max(
+    0,
+    calc(var(--space-pgraph-margin) - var(--space-rendered-gap))
+  );
 }
 
 /* Code Component */
-code {
+.lesson-content code {
   background-color: var(--clr-bg-drk);
   font-size: var(--font-size-small);
   border: 1px solid var(--clr-text);
@@ -393,7 +421,7 @@ code {
 }
 
 /* Blockquote Component */
-blockquote {
+.lesson-content blockquote {
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -402,25 +430,30 @@ blockquote {
   border-radius: 4px;
 }
 
-blockquote p:first-of-type {
+.lesson-content blockquote p:first-of-type {
   margin-inline-start: 16px;
 }
 
-blockquote p:first-of-type::before {
+.lesson-content blockquote p:first-of-type::before {
   content: "“";
 }
 
-blockquote p:first-of-type::after {
+.lesson-content blockquote p:first-of-type::after {
   content: "”";
 }
 
 /* YT Iframe Component */
-iframe.yt {
+.lesson-content iframe.yt {
   width: 100%;
   aspect-ratio: 16/9;
   border: none;
   outline: none;
   border-radius: 4px;
+}
+
+.lesson-content ul,
+.lesson-content ol {
+  margin-left: 32px;
 }
 
 /* Course Viewer Components */

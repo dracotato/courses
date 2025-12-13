@@ -159,7 +159,7 @@ body:not(:has(.sidebar.open)) .topbar .close-icon {
 }
 
 .heading-margin {
-  margin-bottom: 32px;
+  margin-bottom: var(--space-heading-margin);
 }
 
 /* Colors */

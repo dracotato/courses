@@ -7,6 +7,10 @@
   --space-screen-hgap: 16px;
   --space-sidebar-pad: 32px;
 
+  --space-rendered-gap: 24px;
+  --space-heading-margin: 48px;
+  --space-pgraph-margin: 32px;
+
   --font-size-h1: 3.815rem;
   --font-size-h2: 3.052rem;
   --font-size-h3: 2.441rem;
