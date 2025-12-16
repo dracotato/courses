@@ -1,5 +1,24 @@
 const sidebar = document.querySelector(".sidebar");
 
+// if (matchMedia("(prefers-color-scheme: dark)").matches) {
+//   document.querySelector("body").classList.add("dark-theme");
+// }
+
+function setTheme(darkTheme) {
+  if (darkTheme) {
+    document.querySelector("body").classList.add("dark-theme");
+  } else {
+    document.querySelector("body").classList.remove("dark-theme");
+  }
+}
+
+const darkModePref = window.matchMedia("(prefers-color-scheme: dark)");
+
+// initial setup
+setTheme(darkModePref.matches);
+
+darkModePref.addEventListener("change", (e) => setTheme(e.matches));
+
 document
   .querySelector(".topbar .menu-icon")
   .addEventListener("click", openSidebar);
