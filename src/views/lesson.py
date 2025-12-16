@@ -71,7 +71,8 @@ def create():
         title="New Lesson",
         owned_courses=owned_courses,
         # set course to same course from last request for batch writes
-        courseid=form.get("course"),
+        # if a specific course isn't given
+        courseid=request.args.get("course") or form.get("course"),
     )
 
 

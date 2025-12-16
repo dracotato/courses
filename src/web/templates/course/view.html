@@ -35,7 +35,11 @@
     </div>
   </header>
   <div class="container pad-btm lessons-container">
-    <h3 class="heading-margin">Lessons</h3>
+    <div class="flex-container space-between align-center heading-margin">
+      <h3>Lessons</h3>
+      <a href="{{ url_for("root.lesson.create", course=course_id) }}"
+         class="btn primary">Add a Lesson</a>
+    </div>
     <div class="lessons-wrapper">
       {% if lessons %}
         {% for lesson in lessons %}
