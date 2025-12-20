@@ -1,9 +1,5 @@
 const sidebar = document.querySelector(".sidebar");
 
-// if (matchMedia("(prefers-color-scheme: dark)").matches) {
-//   document.querySelector("body").classList.add("dark-theme");
-// }
-
 function setTheme(darkTheme) {
   if (darkTheme) {
     document.querySelector("body").classList.add("dark-theme");
