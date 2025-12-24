@@ -71,7 +71,9 @@ def view(id: int):
             fetch_type=1,
         )["username"],  # pyright: ignore
         lessons=db_execute(
-            query="SELECT * FROM lesson WHERE course = ?", params=(id,), fetch_type=3
+            query="SELECT * FROM lesson WHERE course = ? ORDER BY ord",
+            params=(id,),
+            fetch_type=3,
         ),
     )
 

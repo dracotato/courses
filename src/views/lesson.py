@@ -41,11 +41,20 @@ def create():
             and form["title"]
             and form["content"]
         ):
+            lesson_order: int = (
+                db_execute(
+                    query="SELECT COUNT(*) as count FROM lesson WHERE course = ?",
+                    params=(form["course"],),
+                    fetch_type=1,
+                )["count"]  # pyright: ignore
+                + 1
+            )
             db_execute(
-                query="INSERT INTO lesson (title, content, owner, course) VALUES (?,?,?,?)",
+                query="INSERT INTO lesson (title, content, ord, owner, course) VALUES (?,?,?,?,?)",
                 params=(
                     form["title"].strip(),
                     form["content"].strip(),
+                    lesson_order,
                     g.get("user")["userid"],
                     form["course"],
                 ),
