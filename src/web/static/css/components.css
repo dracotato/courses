@@ -208,9 +208,9 @@ dialog::backdrop {
 }
 
 /* Card Component */
-.card {
+.card,
+.lesson-card {
   display: flex;
-  flex-direction: column;
   gap: 24px;
   background-color: var(--clr-bg-overlay);
   padding: 16px 24px;
@@ -218,9 +218,36 @@ dialog::backdrop {
   border-radius: 4px;
 }
 
-.card a {
+.card {
+  flex-direction: column;
+}
+
+.card a,
+.lesson-card a {
   text-decoration: none;
   color: inherit;
+}
+
+.lesson-card {
+  align-items: center;
+  user-select: none;
+}
+
+.lesson-card .icon {
+  cursor: grab;
+}
+
+.lesson-card .dropdown {
+  margin-left: auto;
+}
+
+#dragged-card {
+  opacity: 0.5;
+}
+
+.card-placeholder {
+  border: 2px dotted var(--clr-bg-outline);
+  border-radius: 4px;
 }
 
 .attr {

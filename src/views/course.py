@@ -124,3 +124,30 @@ def delete():
         abort(400)  # bad request
 
     return json.jsonify(response)
+
+
+@course_bp.route("/<int:id>/", methods=["PUT"])
+def reorder(id):
+    body = request.json
+
+    if not is_entity_owner(EntityEnum.COURSE, id):
+        print("not owner")
+        return abort(400)
+    if (
+        not body
+        or not isinstance(body, list)
+        or not all([isinstance(item, dict) for item in body])
+    ):
+        return abort(400)
+
+    for item in body:
+        item.update({"course": id})
+
+    db_execute(
+        query="UPDATE lesson SET ord = :ord WHERE course = :course AND lessonid = :id",
+        params=body,
+        execute_many=True,
+        commit=True,
+    )
+
+    return json.jsonify("success")

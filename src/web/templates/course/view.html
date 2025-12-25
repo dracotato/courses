@@ -43,42 +43,44 @@
     <div class="lessons-wrapper">
       {% if lessons %}
         {% for lesson in lessons %}
-          <section class="card" data-lesson-id="{{ lesson["lessonid"] }}">
-            <div class=" flex-container space-between align-center">
-              <a href="{{ url_for("root.lesson.view", id=lesson["lessonid"]) }}">
-                <h4>{{ lesson["title"] }}</h4>
-              </a>
-              {% if is_owner %}
-                <div class="dropdown">
-                  <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
-                  <ul class="dropdown-content">
-                    <li>
-                      <a href="{{ url_for("root.lesson.update", id=lesson["lessonid"]) }}"
-                         class="btn">
-                        <span class="icon-text">
-                          <span class="material-symbols-outlined icon">edit</span>
-                          <span class="text">Edit</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <button onclick="deleteEnt('lesson', id={{ lesson['lessonid'] }})"
-                              class="btn">
-                        <span class="icon-text">
-                          <span class="material-symbols-outlined icon">delete</span>
-                          <span class="text">Delete</span>
-                        </span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              {% endif %}
-            </div>
-          </section>
+          <div class="lesson-card"
+               data-lesson-id="{{ lesson["lessonid"] }}"
+               draggable="true">
+            {% if is_owner %}<span class="material-symbols-outlined icon drag-area">drag_indicator</span>{% endif %}
+            <a href="{{ url_for("root.lesson.view", id=lesson["lessonid"]) }}">
+              <h4>{{ lesson["title"] }}</h4>
+            </a>
+            {% if is_owner %}
+              <div class="dropdown">
+                <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
+                <ul class="dropdown-content">
+                  <li>
+                    <a href="{{ url_for("root.lesson.update", id=lesson["lessonid"]) }}"
+                       class="btn">
+                      <span class="icon-text">
+                        <span class="material-symbols-outlined icon">edit</span>
+                        <span class="text">Edit</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <button onclick="deleteEnt('lesson', id={{ lesson['lessonid'] }})"
+                            class="btn">
+                      <span class="icon-text">
+                        <span class="material-symbols-outlined icon">delete</span>
+                        <span class="text">Delete</span>
+                      </span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            {% endif %}
+          </div>
         {% endfor %}
       {% else %}
         It seems this course is still empty.
       {% endif %}
     </div>
   </div>
+  <script src="{{ url_for("static", filename="js/course-view.js") }}"></script>
 {% endblock body %}

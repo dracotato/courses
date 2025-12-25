@@ -25,6 +25,7 @@ def db_execute(
     params: tuple | dict | None = None,
     fetch_type=0,
     fetch_size=1,
+    execute_many=False,
     commit=False,
     return_rowid=False,
 ) -> list[Any] | Any | None:
@@ -37,6 +38,9 @@ def db_execute(
         2 — equivalent to fetchmany(), also set fetch_size
         3 — equivalent to fetchall()
 
+    execute_many:
+        execute the query once for each item in params
+
     commit:
         if set to true then also commit the transactions.
 
@@ -46,7 +50,9 @@ def db_execute(
     """
     db = get_db()
 
-    if params:
+    if params and execute_many:
+        cur = db.executemany(query, params)
+    elif params:
         cur = db.execute(query, params)
     else:
         cur = db.execute(query)
