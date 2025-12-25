@@ -11,7 +11,8 @@ const fieldRegexGlobal = new RegExp(fieldPattern, "g");
 let selectNextField; // a function
 let keybinds = [];
 
-keybindHelpIcon.addEventListener("click", (_) => {
+keybindHelpIcon.addEventListener("click", (e) => {
+  e.preventDefault();
   keybindHelpDialog.showModal();
 });
 
