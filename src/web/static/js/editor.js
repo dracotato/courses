@@ -1,8 +1,8 @@
 const editorArea = document.querySelector(".editor-form__editor");
 const formatsContainer = document.querySelector(".editor-form__formats");
 
-const keybindHelpIcon = document.querySelector(".keybinds-help");
-const keybindHelpDialog = document.querySelector(".keybinds-dialog");
+const helpIcon = document.querySelector(".help-btn");
+const helpDialog = document.querySelector(".help-dialog");
 
 const fieldPattern = "<<[A-z0-9.]+>>";
 const fieldRegex = new RegExp(fieldPattern);
@@ -11,9 +11,9 @@ const fieldRegexGlobal = new RegExp(fieldPattern, "g");
 let selectNextField; // a function
 let keybinds = [];
 
-keybindHelpIcon.addEventListener("click", (e) => {
+helpIcon.addEventListener("click", (e) => {
   e.preventDefault();
-  keybindHelpDialog.showModal();
+  helpDialog.showModal();
 });
 
 for (let i = 0; i < formatsContainer.children.length; i++) {
@@ -30,10 +30,8 @@ for (let i = 0; i < formatsContainer.children.length; i++) {
   // load keybinds
   const keyparts = dataset.keybind.toLowerCase().split("+");
 
-  // populate the keybind help dialog
-  const keybindsContainer = keybindHelpDialog.querySelector(
-    ".keybinds-container",
-  );
+  // populate the help dialog with keybinds
+  const keybindsContainer = helpDialog.querySelector(".keybinds-container");
 
   // create a new keybind div to be added to the DOM
   let newKeybind = document.createElement("div");
@@ -74,7 +72,7 @@ editorArea.addEventListener("keydown", (e) => {
     }
   } else if (e.key === "/" && e.ctrlKey) {
     e.preventDefault();
-    keybindHelpDialog.showModal();
+    helpDialog.showModal();
   } else {
     const match = keybinds.find((entry) => {
       return (

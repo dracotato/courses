@@ -135,6 +135,7 @@ form > button[type="submit"] {
 /* Dialog Component */
 dialog {
   background-color: var(--clr-bg);
+  color: inherit;
   width: 80vw;
   max-width: min(var(--size-max-width), 80vw);
   padding: 32px;
@@ -145,6 +146,21 @@ dialog {
   left: 50%;
   translate: -50% -50%;
   outline: none;
+}
+
+dialog section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-pgraph-margin);
+}
+
+dialog section:not(:last-child) {
+  margin-bottom: var(--space-heading-margin);
+}
+
+dialog section ul,
+dialog section ol {
+  margin-inline-start: var(--space-screen-hgap);
 }
 
 dialog::backdrop {
@@ -392,7 +408,7 @@ dialog::backdrop {
   background-color: var(--clr-primary);
 }
 
-.editor-form__formatbar .keybinds-help {
+.editor-form__formatbar .help-btn {
   color: var(--clr-bg-outline);
 }
 
