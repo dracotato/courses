@@ -233,7 +233,7 @@ dialog::backdrop {
   user-select: none;
 }
 
-.lesson-card .icon {
+.lesson-card .drag-area {
   cursor: grab;
 }
 
