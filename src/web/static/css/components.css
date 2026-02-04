@@ -7,8 +7,9 @@
   flex-direction: column;
   gap: 12px;
   width: 80vw;
-  max-width: 500px;
+  max-width: var(--size-msg);
   max-height: 100vh;
+  margin-top: calc(var(--size-topbar-height) * (2 / 3));
   position: absolute;
   top: 0;
   left: 50%;
@@ -18,22 +19,16 @@
   z-index: 100;
 }
 
-.msg-container .msg:first-child {
-  margin-top: 24px;
-}
-
-.msg-container .msg:last-child {
-  margin-bottom: 24px;
-}
-
 .msg {
+  --msg-bg: var(--clr-primary);
+  --msg-accent: var(--clr-text-primary);
+
   display: flex;
   gap: 8px;
-  background-color: var(--clr-primary);
-  color: var(--clr-text-primary);
+  background-color: var(--msg-bg);
   width: 100%;
   padding: 8px 24px;
-  border: 1px solid var(--clr-text-primary);
+  border: 2px solid var(--msg-accent);
   border-radius: 4px;
   transition:
     transform 350ms ease-in-out,
@@ -42,15 +37,18 @@
   cursor: pointer;
 }
 
+.msg .icon {
+  color: var(--msg-accent);
+}
+
 .msg.fade-out {
   transform: translateX(80%);
   opacity: 0;
 }
 
 .msg.error {
-  background-color: var(--clr-danger);
-  color: var(--clr-text-danger);
-  border-color: var(--clr-text-danger);
+  --msg-bg: var(--clr-danger);
+  --msg-accent: var(--clr-text-danger);
 }
 
 /* Button Component */
@@ -85,6 +83,12 @@ form {
 form > button[type="submit"] {
   margin-top: 32px;
   align-self: flex-end;
+}
+
+form .btns-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .input-container {
@@ -128,7 +132,7 @@ form > button[type="submit"] {
 }
 
 .input-container textarea {
-  min-height: 50px; /* avoid shrinking too much */
+  min-height: 50px;
   resize: vertical;
 }
 
@@ -148,23 +152,12 @@ dialog {
   outline: none;
 }
 
-dialog section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-pgraph-margin);
+dialog::backdrop {
+  background-color: color-mix(in srgb, black 30%, transparent);
 }
 
 dialog section:not(:last-child) {
-  margin-bottom: var(--space-heading-margin);
-}
-
-dialog section ul,
-dialog section ol {
-  margin-inline-start: var(--space-screen-hgap);
-}
-
-dialog::backdrop {
-  background-color: color-mix(in srgb, black 30%, transparent);
+  margin-bottom: var(--space-section);
 }
 
 /* Dropdown Menu Component */
@@ -224,44 +217,51 @@ dialog::backdrop {
 }
 
 /* Card Component */
-.card,
-.lesson-card {
+.cards-container {
   display: flex;
+  flex-direction: column;
   gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-subsection);
   background-color: var(--clr-bg-overlay);
-  padding: 16px 24px;
+  padding: 24px 24px;
   border: 2px solid var(--clr-bg-outline);
   border-radius: 4px;
 }
 
-.card {
+.card-header {
+  display: flex;
   flex-direction: column;
+  gap: var(--space-paragraph);
 }
 
-.card a,
-.lesson-card a {
-  text-decoration: none;
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-title .main-title {
+  flex-grow: 1;
+}
+
+.card-header a {
   color: inherit;
 }
 
-.lesson-card {
-  align-items: center;
-  user-select: none;
-}
-
-.lesson-card .drag-area {
+.drag-area {
   cursor: grab;
-}
-
-.lesson-card .dropdown {
-  margin-left: auto;
 }
 
 #dragged-card {
   opacity: 0.5;
 }
 
-.card-placeholder {
+.drag-placeholder {
   border: 2px dotted var(--clr-bg-outline);
   border-radius: 4px;
 }
@@ -270,9 +270,26 @@ dialog::backdrop {
   background-color: var(--clr-primary);
   font-size: var(--font-size-small);
   width: fit-content;
-  padding: 4px 8px;
+  padding: 4px 12px;
   border: 1px solid var(--clr-bg-outline);
-  border-radius: 4px;
+  border-radius: 999px;
+}
+
+/* TODO: Is this page-specific? then move it, else make it more re-usable */
+/* It's probably not page-specific and can be improved */
+
+/* Home */
+/* ------------------------ */
+.welcome {
+  text-align: center;
+}
+
+.welcome h1 {
+  font-size: 3rem;
+}
+
+.welcome .logo {
+  color: var(--clr-text-primary);
 }
 
 /* Lesson Editor Components */
@@ -300,7 +317,7 @@ dialog::backdrop {
 /* kbd Component */
 .keybind kbd {
   background-color: var(--clr-bg-overlay);
-  min-width: 40px; /* Ensure all 1 chars are the same width */
+  min-width: 40px;
   margin-bottom: 4px;
   padding: 6px 12px;
   border: 2px solid var(--clr-bg-outline);
@@ -313,8 +330,8 @@ dialog::backdrop {
 .editor-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  height: 100%;
+  gap: var(--space-paragraph);
+  flex-grow: 1;
 }
 
 .editor-form__title,
@@ -436,50 +453,10 @@ dialog::backdrop {
   gap: 8px;
   padding-bottom: 12px;
   border-bottom: 2px solid var(--clr-bg-outline);
-  margin-bottom: 48px;
-}
-
-.lesson-header__course {
-  color: var(--clr-text-primary);
-  text-decoration: none;
-}
-
-.lesson-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-rendered-gap);
-}
-
-/* heading margin, before and after other elements */
-.lesson-content > *:first-child {
-  margin-top: 0;
-}
-
-.lesson-content > *:last-child {
-  margin-bottom: 0;
-}
-
-.lesson-content h1,
-.lesson-content h2,
-.lesson-content h3,
-.lesson-content h4,
-.lesson-content h5,
-.lesson-content h6 {
-  margin-block: max(
-    0,
-    calc(var(--space-heading-margin) - var(--space-rendered-gap))
-  );
-}
-
-.lesson-content p + p {
-  margin-top: max(
-    0,
-    calc(var(--space-pgraph-margin) - var(--space-rendered-gap))
-  );
 }
 
 /* Code Component */
-.lesson-content code {
+code {
   background-color: var(--clr-bg-overlay);
   font-size: var(--font-size-small);
   border: 1px solid var(--clr-text);
@@ -488,7 +465,7 @@ dialog::backdrop {
 }
 
 /* Blockquote Component */
-.lesson-content blockquote {
+blockquote {
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -497,20 +474,20 @@ dialog::backdrop {
   border-radius: 4px;
 }
 
-.lesson-content blockquote p:first-of-type {
+blockquote p:first-of-type {
   margin-inline-start: 16px;
 }
 
-.lesson-content blockquote p:first-of-type::before {
+blockquote p:first-of-type::before {
   content: "“";
 }
 
-.lesson-content blockquote p:first-of-type::after {
+blockquote p:first-of-type::after {
   content: "”";
 }
 
 /* YT Iframe Component */
-.lesson-content iframe.yt {
+iframe.yt {
   width: 100%;
   aspect-ratio: 16/9;
   border: none;
@@ -518,26 +495,15 @@ dialog::backdrop {
   border-radius: 4px;
 }
 
-.lesson-content ul,
-.lesson-content ol {
-  margin-left: 32px;
-}
-
 /* Course Viewer Components */
 /* ------------------------ */
-.course-header-container {
-  background-color: var(--clr-primary);
-  margin-bottom: 62px;
-}
-
-.course-header {
+.banner {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-}
-
-.course-title {
-  margin-bottom: 12px;
+  align-items: center;
+  background-color: var(--clr-primary);
+  width: 100%;
+  padding-block: var(--space-section);
 }
 
 .lessons-wrapper {

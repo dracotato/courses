@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block body %}
-  <form class="container pad-vertical auth-form" method="post">
-    {% block form %}
-    {% endblock form %}
-  </form>
+  <div class="container">
+    <form class="auth-form" method="post">
+      {% block inputs %}
+      {% endblock inputs %}
+      <div class="btns-container">
+        {% block buttons %}
+        {% endblock buttons %}
+      </div>
+    </form>
+  </div>
 {% endblock body %}

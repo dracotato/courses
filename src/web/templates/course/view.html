@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
-  <header class="course-header-container">
-    <div class="container pad-vertical course-header">
+  <header class="banner">
+    <div class="container">
       <div>
-        <div class="flex-container space-between align-center course-title">
-          <h2>{{ course_title }}</h2>
+        <div class="heading-group">
+          <h1>{{ course_title }}</h1>
           {% if is_owner %}
             <div class="dropdown">
               <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
@@ -34,52 +34,57 @@
       <small>By: {{ owner_username }}</small>
     </div>
   </header>
-  <div class="container pad-vertical lessons-container">
-    <div class="flex-container space-between align-center heading-margin">
-      <h3>Lessons</h3>
-      <a href="{{ url_for("root.lesson.create", course=course_id) }}"
-         class="btn primary">Add a Lesson</a>
-    </div>
-    <div class="lessons-wrapper">
-      {% if lessons %}
-        {% for lesson in lessons %}
-          <div class="lesson-card"
-               data-lesson-id="{{ lesson["lessonid"] }}"
-               draggable="true">
-            {% if is_owner %}<span class="material-symbols-outlined icon drag-area">drag_indicator</span>{% endif %}
-            <a href="{{ url_for("root.lesson.view", id=lesson["lessonid"]) }}">
-              <h4>{{ lesson["title"] }}</h4>
-            </a>
-            {% if is_owner %}
-              <div class="dropdown">
-                <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
-                <ul class="dropdown-content">
-                  <li>
-                    <a href="{{ url_for("root.lesson.update", id=lesson["lessonid"]) }}"
-                       class="btn">
-                      <span class="icon-text">
-                        <span class="material-symbols-outlined icon">edit</span>
-                        <span class="text">Edit</span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <button onclick="deleteEnt('lesson', id={{ lesson['lessonid'] }})"
-                            class="btn">
-                      <span class="icon-text">
-                        <span class="material-symbols-outlined icon">delete</span>
-                        <span class="text">Delete</span>
-                      </span>
-                    </button>
-                  </li>
-                </ul>
+  <div class="container">
+    <div class="lessons-container">
+      <div class="heading-group">
+        <h2>Lessons</h2>
+        <a href="{{ url_for("root.lesson.create", course=course_id) }}"
+           class="btn primary">Add a Lesson</a>
+      </div>
+      <div class="cards-container">
+        {% if lessons %}
+          {% for lesson in lessons %}
+            <div class="card"
+                 data-lesson-id="{{ lesson["lessonid"] }}"
+                 draggable="true">
+              <div class="card-header">
+                <div class="card-title">
+                  {% if is_owner %}<span class="material-symbols-outlined icon drag-area">drag_indicator</span>{% endif %}
+                  <a href="{{ url_for("root.lesson.view", id=lesson["lessonid"]) }}"
+                     class="main-title bold">{{ lesson["title"] }}</a>
+                  {% if is_owner %}
+                    <div class="dropdown">
+                      <span class="material-symbols-outlined icon dropdown-btn">more_horiz</span>
+                      <ul class="dropdown-content">
+                        <li>
+                          <a href="{{ url_for("root.lesson.update", id=lesson["lessonid"]) }}"
+                             class="btn">
+                            <span class="icon-text">
+                              <span class="material-symbols-outlined icon">edit</span>
+                              <span class="text">Edit</span>
+                            </span>
+                          </a>
+                        </li>
+                        <li>
+                          <button onclick="deleteEnt('lesson', id={{ lesson['lessonid'] }})"
+                                  class="btn">
+                            <span class="icon-text">
+                              <span class="material-symbols-outlined icon">delete</span>
+                              <span class="text">Delete</span>
+                            </span>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  {% endif %}
+                </div>
               </div>
-            {% endif %}
-          </div>
-        {% endfor %}
-      {% else %}
-        It seems this course is still empty.
-      {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          It seems this course is still empty.
+        {% endif %}
+      </div>
     </div>
   </div>
   <script src="{{ url_for("static", filename="js/course-view.js") }}"></script>

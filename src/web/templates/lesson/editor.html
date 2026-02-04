@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-  <div class="container screen-height pad-vertical">
+  <div class="container">
     <form class="editor-form" method="post">
       <div class="editor-form__title">
         <select name="course" class="bold" required>
@@ -111,21 +111,29 @@
           </li>
         </ul>
         <dialog class="help-dialog" closedby="any">
-          <section id="usage">
-            <h4 class="heading-margin">Editor Usage</h4>
+          <section class="rich-text" id="usage">
+            <h1>Editor Usage</h1>
             <p>Hello, thanks for using this platform.</p>
             <p>This editor uses Markdown, which is a very mainstream markup language. For example, you can do:</p>
             <ul>
-              <li>**bold** => <b>bold</b></li>
-              <li>*italic* => <i>italic</i></li>
-              <li>[Click me to go somewhere](https://example.com) => <a href="https://example.com" target="_blank">Click me to go somwhere</a></li>
+              <li>
+                **bold** => <b>bold</b>
+              </li>
+              <li>
+                *italic* => <i>italic</i>
+              </li>
+              <li>
+                [Click me to go somewhere](https://example.com) => <a href="https://example.com" target="_blank">Click me to go somwhere</a>
+              </li>
             </ul>
             <p>Many features of Markdown are supported, but not all.</p>
             <p>You can also embed videos by simply adding a link to the video. Currently, only YouTube videos are supported.</p>
-            <p>If privacy is a concern. You can upload your videos as “unlisted”, and they won't be viewable on YouTube without the link.</p>
+            <p>
+              If privacy is a concern. You can upload your videos as “unlisted”, and they won't be viewable on YouTube without the link.
+            </p>
           </section>
-          <section id="keybinds">
-            <h4 class="heading-margin">Keybinds</h4>
+          <section class="rich-text" id="keybinds">
+            <h1>Keybinds</h1>
             <div class="keybinds-container">
               <div class="keybind">
                 <div class="keybind-title">Open This Menu (While Writing)</div>

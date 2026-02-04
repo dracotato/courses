@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
-  <div class="container pad-vertical">
+  <div class="container">
     <div class=" lesson-header">
       <a href="{{ url_for("root.course.view", id=course["courseid"]) }}"
-         class="lesson-header__course">
-        <small>{{ course["title"] }}</small>
-      </a>
-      <div class="flex-container space-between align-center">
+         class="small">{{ course["title"] }}</a>
+      <div class="heading-group no-margin">
         <h4>{{ lesson["title"] }}</h4>
         {% if is_owner %}
           <div class="dropdown">
@@ -35,7 +33,7 @@
         {% endif %}
       </div>
     </div>
-    <div class="lesson-content">{{ rendered_content | safe }}</div>
+    <div class="rich-text">{{ rendered_content | safe }}</div>
   </div>
   <script src="{{ url_for("static", filename="js/render.js") }}"></script>
 {% endblock body %}

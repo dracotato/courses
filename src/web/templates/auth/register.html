@@ -1,5 +1,5 @@
 {% extends "base_auth.html" %}
-{% block form %}
+{% block inputs %}
   <div class="input-container">
     <label for="username">Username</label>
     <input type="text"
@@ -36,11 +36,11 @@
            autocomplete="new-password"
            required>
   </div>
-  <div class="flex-container space-between">
-    <p>
-      Have an account?
-      <a href="{{ url_for(".login") }}">Log In</a>
-    </p>
-    <button type="submit" class="btn primary">Register</button>
-  </div>
-{% endblock form %}
+{% endblock inputs %}
+{% block buttons %}
+  <p>
+    Have an account?
+    <a href="{{ url_for(".login") }}">Log In</a>
+  </p>
+  <button type="submit" class="btn primary">Register</button>
+{% endblock buttons %}

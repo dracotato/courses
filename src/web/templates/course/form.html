@@ -1,23 +1,25 @@
 {% extends "base.html" %}
 {% block body %}
-  <form class="container pad-vertical" method="post">
-    <div class="input-container">
-      <label for="title">Title</label>
-      <input type="text"
-             name="title"
-             id="title"
-             placeholder="My super awesome course"
-             value="{{ course_title }}"
-             required>
-    </div>
-    <div class="input-container">
-      <label for="desc">Description</label>
-      <textarea type="text"
-                name="desc"
-                id="desc"
-                placeholder="This course covers x, y, and z"
-                required>{{ course_desc }}</textarea>
-    </div>
-    <button type="submit" class="btn primary">Save</button>
-  </form>
+  <div class="container">
+    <form method="post">
+      <div class="input-container">
+        <label for="title">Title</label>
+        <input type="text"
+               name="title"
+               id="title"
+               placeholder="My super awesome course"
+               value="{{ course_title }}"
+               required>
+      </div>
+      <div class="input-container">
+        <label for="desc">Description</label>
+        <textarea type="text"
+                  name="desc"
+                  id="desc"
+                  placeholder="This course covers x, y, and z"
+                  required>{{ course_desc }}</textarea>
+      </div>
+      <button type="submit" class="btn primary">Save</button>
+    </form>
+  </div>
 {% endblock body %}

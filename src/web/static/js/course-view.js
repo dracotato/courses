@@ -1,8 +1,8 @@
-const lessonContainer = document.querySelector(".lessons-wrapper");
+const lessonContainer = document.querySelector(".cards-container");
 
 // to ensure the cards order is always up to date
 function getCards() {
-  return lessonContainer.querySelectorAll(".lesson-card");
+  return lessonContainer.querySelectorAll(".card[data-lesson-id]");
 }
 
 async function submitOrder() {
@@ -51,7 +51,7 @@ function getTargetCard(event) {
 
 function createPlaceholder() {
   const placeholder = document.createElement("div");
-  placeholder.classList.add("card-placeholder");
+  placeholder.classList.add("drag-placeholder");
   placeholder.style.height = `${document.querySelector("#dragged-card").offsetHeight}px`;
 
   return placeholder;
@@ -68,7 +68,7 @@ function movePlaceholder(event) {
     return;
   }
 
-  let placeholder = lessonContainer.querySelector(".card-placeholder");
+  let placeholder = lessonContainer.querySelector(".drag-placeholder");
   if (!placeholder) {
     placeholder = createPlaceholder();
   }
@@ -89,7 +89,7 @@ lessonContainer.addEventListener("drop", (e) => {
   e.preventDefault();
   let draggedCard = document.querySelector("#dragged-card");
   lessonContainer.insertBefore(draggedCard, getTargetCard(e));
-  lessonContainer.querySelector(".card-placeholder")?.remove();
+  lessonContainer.querySelector(".drag-placeholder")?.remove();
   submitOrder();
 });
 
