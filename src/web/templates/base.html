@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
     {# fonts #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +13,13 @@
     {# the icons query needs to be alphabetically ordered #}
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=account_circle,add_box,close,code,delete,drag_indicator,edit,format_bold,format_h1,format_h2,format_h3,format_h4,format_italic,format_list_bulleted,format_list_numbered,format_quote,help,home,info,link,login,logout,menu,more_horiz,person_add,warning"
           rel="stylesheet" />
+    {# Load theme before styles to prevent flickering #}
+    <script>
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.style.setProperty("color-scheme", savedTheme)
+      }
+    </script>
     {# css #}
     <link href="{{ url_for("static", filename="css/base.css") }}"
           rel="stylesheet">

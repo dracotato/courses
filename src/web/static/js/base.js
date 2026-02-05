@@ -1,19 +1,9 @@
 const sidebar = document.querySelector(".sidebar");
 
-function setTheme(darkTheme) {
-  if (darkTheme) {
-    document.querySelector("body").classList.add("dark-theme");
-  } else {
-    document.querySelector("body").classList.remove("dark-theme");
-  }
+function setTheme(theme) {
+  document.documentElement.style.setProperty("color-scheme", theme);
+  localStorage.setItem("theme", theme);
 }
-
-const darkModePref = window.matchMedia("(prefers-color-scheme: dark)");
-
-// initial setup
-setTheme(darkModePref.matches);
-
-darkModePref.addEventListener("change", (e) => setTheme(e.matches));
 
 document
   .querySelector(".topbar .menu-icon")
