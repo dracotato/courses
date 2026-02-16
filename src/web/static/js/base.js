@@ -1,3 +1,4 @@
+const menuIcon = document.querySelector(".topbar .menu-icon");
 const sidebar = document.querySelector(".sidebar");
 
 function setTheme(theme) {
@@ -5,20 +6,9 @@ function setTheme(theme) {
   localStorage.setItem("theme", theme);
 }
 
-document
-  .querySelector(".topbar .menu-icon")
-  .addEventListener("click", openSidebar);
-document
-  .querySelector(".topbar .close-icon")
-  .addEventListener("click", closeSidebar);
-
-function openSidebar() {
-  sidebar.classList.add("open");
-}
-
-function closeSidebar() {
-  sidebar.classList.remove("open");
-}
+menuIcon.addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+});
 
 /* toggle dropdown when clicking on dropdown-btn */
 document.querySelectorAll(".dropdown").forEach((entry) => {

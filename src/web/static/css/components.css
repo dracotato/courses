@@ -65,6 +65,7 @@
   text-align: center;
   cursor: pointer;
   text-decoration: none;
+  user-select: none;
 }
 
 /* Button Variant */
@@ -165,6 +166,10 @@ dialog section:not(:last-child) {
   position: relative;
 }
 
+.dropdown-btn {
+  cursor: pointer;
+}
+
 .dropdown-content {
   display: none;
   flex-direction: column;
@@ -208,12 +213,11 @@ dialog section:not(:last-child) {
 }
 
 .icon {
-  height: fit-content;
-  user-select: none;
-  position: relative;
-  cursor: pointer;
-  z-index: 1;
-  transition: color 100ms ease-out;
+  width: 1.2rem;
+}
+
+.icon-large {
+  width: 2.5rem;
 }
 
 /* Card Component */
@@ -418,6 +422,7 @@ dialog section:not(:last-child) {
   outline: none;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .editor-form__formatbar button:hover,

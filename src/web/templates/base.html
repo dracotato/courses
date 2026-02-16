@@ -9,10 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet">
-    {# icons #}
-    {# the icons query needs to be alphabetically ordered #}
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=account_circle,add_box,close,code,delete,drag_indicator,edit,format_bold,format_h1,format_h2,format_h3,format_h4,format_italic,format_list_bulleted,format_list_numbered,format_quote,help,home,info,link,login,logout,menu,more_horiz,person_add,warning"
-          rel="stylesheet" />
     {# Load theme before styles to prevent flickering #}
     <script>
       const savedTheme = localStorage.getItem("theme");
@@ -37,17 +33,32 @@
       {% for msg in get_flashed_messages(with_categories=True) %}
         <li class="msg {{ msg[0] }}">
           {% if msg[0] == "error" %}
-            <span class="material-symbols-outlined icon">warning</span>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="icon"
+                 fill="currentColor"
+                 viewBox="0 0 256 256">
+              <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z">
+              </path>
+            </svg>
           {% else %}
-            <span class="material-symbols-outlined icon">info</span>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="icon"
+                 fill="currentColor"
+                 viewBox="0 0 256 256">
+              <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-4,48a12,12,0,1,1-12,12A12,12,0,0,1,124,72Zm12,112a16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40a8,8,0,0,1,0,16Z">
+              </path>
+            </svg>
           {% endif %}
           {{ msg[1] }}
         </li>
       {% endfor %}
     </ul>
     <header class="topbar">
-      <span class="material-symbols-outlined icon menu-icon">menu</span>
-      <span class="material-symbols-outlined icon close-icon">close</span>
+      <span class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
       <p class="bold">
         Courses
         {% if title %}— {{ title }}{% endif %}
@@ -59,7 +70,13 @@
           <li>
             <a href="{{ url_for("root.index") }}">
               <span class="icon-text">
-                <span class="material-symbols-outlined icon">home</span>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="icon"
+                     fill="currentColor"
+                     viewBox="0 0 256 256">
+                  <path d="M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z">
+                  </path>
+                </svg>
                 <span class="text">Home</span>
               </span>
             </a>
@@ -69,7 +86,13 @@
             <li>
               <a href="{{ url_for("root.course.create") }}">
                 <span class="icon-text">
-                  <span class="material-symbols-outlined icon">add_box</span>
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       class="icon"
+                       fill="currentColor"
+                       viewBox="0 0 256 256">
+                    <path d="M128,24A104,104,0,1,0,232,128,104.13,104.13,0,0,0,128,24Zm40,112H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32a8,8,0,0,1,0,16Z">
+                    </path>
+                  </svg>
                   <span class="text">New Course</span>
                 </span>
               </a>
@@ -77,7 +100,13 @@
             <li>
               <a href="{{ url_for("root.lesson.create") }}">
                 <span class="icon-text">
-                  <span class="material-symbols-outlined icon">add_box</span>
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       class="icon"
+                       fill="currentColor"
+                       viewBox="0 0 256 256">
+                    <path d="M128,24A104,104,0,1,0,232,128,104.13,104.13,0,0,0,128,24Zm40,112H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32a8,8,0,0,1,0,16Z">
+                    </path>
+                  </svg>
                   <span class="text">New Lesson</span>
                 </span>
               </a>
@@ -88,7 +117,13 @@
             <li>
               <a href="{{ url_for("root.auth.logout") }}">
                 <span class="icon-text">
-                  <span class="material-symbols-outlined icon">logout</span>
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       class="icon"
+                       fill="currentColor"
+                       viewBox="0 0 256 256">
+                    <path d="M120,216a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V40a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H56V208h56A8,8,0,0,1,120,216Zm109.66-93.66-40-40A8,8,0,0,0,176,88v32H112a8,8,0,0,0,0,16h64v32a8,8,0,0,0,13.66,5.66l40-40A8,8,0,0,0,229.66,122.34Z">
+                    </path>
+                  </svg>
                   <span class="text">Log Out</span>
                 </span>
               </a>
@@ -97,7 +132,13 @@
             <li>
               <a href="{{ url_for("root.auth.login") }}">
                 <span class="icon-text">
-                  <span class="material-symbols-outlined icon">login</span>
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       class="icon"
+                       fill="currentColor"
+                       viewBox="0 0 256 256">
+                    <path d="M141.66,133.66l-40,40A8,8,0,0,1,88,168V136H24a8,8,0,0,1,0-16H88V88a8,8,0,0,1,13.66-5.66l40,40A8,8,0,0,1,141.66,133.66ZM200,32H136a8,8,0,0,0,0,16h56V208H136a8,8,0,0,0,0,16h64a8,8,0,0,0,8-8V40A8,8,0,0,0,200,32Z">
+                    </path>
+                  </svg>
                   <span class="text">Log In</span>
                 </span>
               </a>
@@ -105,7 +146,13 @@
             <li>
               <a href="{{ url_for("root.auth.register") }}">
                 <span class="icon-text">
-                  <span class="material-symbols-outlined icon">person_add</span>
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                       class="icon"
+                       fill="currentColor"
+                       viewBox="0 0 256 256">
+                    <path d="M256,136a8,8,0,0,1-8,8H232v16a8,8,0,0,1-16,0V144H200a8,8,0,0,1,0-16h16V112a8,8,0,0,1,16,0v16h16A8,8,0,0,1,256,136ZM144,157.68a68,68,0,1,0-71.9,0c-20.65,6.76-39.23,19.39-54.17,37.17A8,8,0,0,0,24,208H192a8,8,0,0,0,6.13-13.15C183.18,177.07,164.6,164.44,144,157.68Z">
+                    </path>
+                  </svg>
                   <span class="text">Register</span>
                 </span>
               </a>
@@ -115,7 +162,13 @@
       </nav>
       {% if g.user %}
         <div class="profile">
-          <span class="material-symbols-outlined icon">account_circle</span>
+          <svg xmlns="http://www.w3.org/2000/svg"
+               class="icon-large"
+               fill="currentColor"
+               viewBox="0 0 256 256">
+            <path d="M172,120a44,44,0,1,1-44-44A44.05,44.05,0,0,1,172,120Zm60,8A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88.09,88.09,0,0,0-91.47-87.93C77.43,41.89,39.87,81.12,40,128.25a87.65,87.65,0,0,0,22.24,58.16A79.71,79.71,0,0,1,84,165.1a4,4,0,0,1,4.83.32,59.83,59.83,0,0,0,78.28,0,4,4,0,0,1,4.83-.32,79.71,79.71,0,0,1,21.79,21.31A87.62,87.62,0,0,0,216,128Z">
+            </path>
+          </svg>
           <div class="profile__details">
             <p class="bold">{{ g.user["username"] }}</p>
             <small>{{ g.user["email"] }}</small>

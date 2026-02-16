@@ -177,14 +177,44 @@ hr {
   z-index: 99;
 }
 
-/* hide the menu icon if the sidebar is open */
-body:has(.sidebar.open) .topbar .menu-icon {
-  display: none;
+.menu-icon {
+  --bar-width: 1.2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: var(--bar-width);
+  height: 0.8rem;
+  gap: 0.23rem;
 }
 
-/* hide the close icon if the sidebar is not open */
-body:not(:has(.sidebar.open)) .topbar .close-icon {
-  display: none;
+.menu-icon span {
+  background-color: var(--clr-text);
+  width: 100%;
+  flex-grow: 1;
+  border-radius: 2px;
+  position: relative;
+  transition: transform 0.2s ease-in-out;
+}
+
+.menu-icon:hover span:nth-child(2) {
+  transform: translateX(20%);
+}
+
+body:has(.sidebar.open) .menu-icon span:first-child {
+  translate: 0 -50%;
+  top: 50%;
+  transform: rotate(45deg);
+}
+
+body:has(.sidebar.open) .menu-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+body:has(.sidebar.open) .menu-icon span:last-child {
+  translate: 0 50%;
+  top: -50%;
+  transform: rotate(-45deg);
 }
 
 /* Sidebar */
