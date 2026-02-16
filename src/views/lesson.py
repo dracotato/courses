@@ -33,18 +33,19 @@ def create():
     form = request.form
     if request.method == "POST":
         if (
-            db_execute(
+            form.get("course")
+            and form.get("title")
+            and form.get("content")
+            and db_execute(
                 query="SELECT * FROM course WHERE courseid = ? AND owner = ?",
-                params=(form["course"], g.get("user")["userid"]),
+                params=(form.get("course"), g.get("user")["userid"]),
                 fetch_type=1,
             )
-            and form["title"]
-            and form["content"]
         ):
             lesson_order: int = (
                 db_execute(
                     query="SELECT COUNT(*) as count FROM lesson WHERE course = ?",
-                    params=(form["course"],),
+                    params=(form.get("course"),),
                     fetch_type=1,
                 )["count"]  # pyright: ignore
                 + 1
@@ -52,20 +53,22 @@ def create():
             db_execute(
                 query="INSERT INTO lesson (title, content, ord, owner, course) VALUES (?,?,?,?,?)",
                 params=(
-                    form["title"].strip(),
-                    form["content"].strip(),
+                    form.get("title").strip(),
+                    form.get("content").strip(),
                     lesson_order,
                     g.get("user")["userid"],
-                    form["course"],
+                    form.get("course"),
                 ),
                 commit=True,
                 return_rowid=True,
             )
             flash("Lesson created.")
-            if form["batch"] == "0":
-                return redirect(url_for("root.course.view", id=form["course"]))
+            if form.get("batch") == "0":
+                return redirect(url_for("root.course.view", id=form.get("course")))
         else:
-            return abort(400)
+            flash(
+                "Please fill all fields, and make sure you have the right permissions."
+            )
 
     owned_courses = db_execute(
         query="SELECT * FROM course WHERE owner = ?",
@@ -79,8 +82,7 @@ def create():
         "editor.html",
         title="New Lesson",
         owned_courses=owned_courses,
-        # set course to same course from last request for batch writes
-        # if a specific course isn't given
+        # if the user still hasn't been redirected, it means they're batch writing
         courseid=request.args.get("course") or form.get("course"),
     )
 
@@ -127,12 +129,12 @@ def update(id: int):
     if request.method == "POST":
         form = request.form
 
-        if not form["title"] or not form["content"]:
+        if not form.get("title") or not form.get("content"):
             return abort(400)
 
         db_execute(
             query="UPDATE lesson SET course = ?, title = ?, content = ? WHERE lessonid = ?",
-            params=(form["course"], form["title"], form["content"], id),
+            params=(form.get("course"), form.get("title"), form.get("content"), id),
             commit=True,
         )
 
